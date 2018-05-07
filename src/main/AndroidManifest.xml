@@ -1,0 +1,8 @@
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.beatonma.lib.ui.activity">
+    <application>
+        <activity
+            android:name=".PopupMessageActivity"/>
+    </application>
+</manifest>

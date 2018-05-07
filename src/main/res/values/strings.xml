@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Activity</string>
+
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_dismiss">Dismiss</string>
+
+    <string name="transition_card">transition_card</string>
+    <string name="transition_background">transition_background</string>
+</resources>
