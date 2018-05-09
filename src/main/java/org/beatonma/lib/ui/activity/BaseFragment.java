@@ -2,14 +2,14 @@ package org.beatonma.lib.ui.activity;
 
 import android.app.Activity;
 import android.content.Context;
-import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
 import android.os.Bundle;
-import android.support.annotation.CallSuper;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
+import androidx.annotation.CallSuper;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import com.google.android.material.snackbar.Snackbar;
+import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,7 +70,7 @@ public abstract class BaseFragment extends Fragment {
         }
     }
 
-    public Snackbar getSnackbar(final String message) {
+    public com.google.android.material.snackbar.Snackbar getSnackbar(final String message) {
         Activity activity = getActivity();
         if (activity instanceof BaseActivity) {
             return ((BaseActivity) activity).getSnackbar(message);

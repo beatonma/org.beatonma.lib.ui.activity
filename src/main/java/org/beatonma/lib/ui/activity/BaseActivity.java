@@ -3,14 +3,7 @@ package org.beatonma.lib.ui.activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.CallSuper;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AppCompatDelegate;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +12,12 @@ import android.view.ViewGroup;
 import org.beatonma.lib.log.Log;
 
 import java.lang.ref.WeakReference;
+
+import androidx.annotation.CallSuper;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
 
 /**
  * Created by Michael on 05/08/2016.
@@ -56,17 +55,17 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected abstract <T extends ViewDataBinding> T getBinding();
 
-    public Snackbar getSnackbar(final String message) {
+    public com.google.android.material.snackbar.Snackbar getSnackbar(final String message) {
         final View v = findViewById(R.id.top_level_container);
         if (v != null) {
-            return Snackbar.make(v, message, Snackbar.LENGTH_LONG);
+            return com.google.android.material.snackbar.Snackbar.make(v, message, com.google.android.material.snackbar.Snackbar.LENGTH_LONG);
         }
         Log.e(TAG, "Error building snackbar for message: " + message);
         return null;
     }
 
     public void showSnackbar(final String message) {
-        final Snackbar snackbar = getSnackbar(message);
+        final com.google.android.material.snackbar.Snackbar snackbar = getSnackbar(message);
         if (snackbar != null) {
             snackbar.show();
         }

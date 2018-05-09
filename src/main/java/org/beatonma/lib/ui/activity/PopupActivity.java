@@ -3,10 +3,7 @@ package org.beatonma.lib.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
 import android.os.Bundle;
-import android.support.annotation.CallSuper;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
 import android.transition.TransitionManager;
@@ -23,6 +20,10 @@ import org.beatonma.lib.ui.activity.transition.SharedPopupTransform;
 import org.beatonma.lib.ui.style.Animation;
 import org.beatonma.lib.ui.style.Interpolate;
 import org.beatonma.lib.ui.style.Views;
+
+import androidx.annotation.CallSuper;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
 
 /**
  * Created by Michael on 22/07/2016.

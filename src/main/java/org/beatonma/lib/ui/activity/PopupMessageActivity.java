@@ -1,6 +1,6 @@
 package org.beatonma.lib.ui.activity;
 
-import android.databinding.ViewDataBinding;
+import androidx.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.text.TextUtils;
 
