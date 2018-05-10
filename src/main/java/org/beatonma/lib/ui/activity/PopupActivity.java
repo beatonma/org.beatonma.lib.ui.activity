@@ -28,7 +28,7 @@ import androidx.databinding.ViewDataBinding;
 /**
  * Created by Michael on 22/07/2016.
  */
-public abstract class PopupActivity extends BaseActivity {
+public abstract class PopupActivity<T extends ViewDataBinding> extends BaseActivity<T> {
     protected final static String TAG = "PopupActivity";
 
     public final static String EXTRA_TITLE = "title";

@@ -25,12 +25,12 @@ import androidx.databinding.ViewDataBinding;
  * convenience methods for databinding, snackbars and animations.
  * Also creates a weak context.
  */
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity<T extends ViewDataBinding> extends AppCompatActivity {
     protected final static String TAG = "BaseActivity";
 
     public final static String UI_DARK_THEME = "pref_dark_theme";
 
-    protected WeakReference<BaseActivity> mWeakContext;
+    protected WeakReference<BaseActivity<T>> mWeakContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,11 +49,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         initIntent(getIntent());
     }
 
-    protected <T extends ViewDataBinding> T setLayout(int layoutId) {
+    protected T setLayout(int layoutId) {
         return DataBindingUtil.setContentView(this, layoutId);
     }
 
-    protected abstract <T extends ViewDataBinding> T getBinding();
+    protected abstract T getBinding();
 
     public com.google.android.material.snackbar.Snackbar getSnackbar(final String message) {
         final View v = findViewById(R.id.top_level_container);
@@ -71,7 +71,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    public WeakReference<BaseActivity> getWeakContext() {
+    public WeakReference<BaseActivity<T>> getWeakContext() {
         return mWeakContext;
     }
 
