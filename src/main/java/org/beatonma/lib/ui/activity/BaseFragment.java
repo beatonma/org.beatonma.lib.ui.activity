@@ -2,20 +2,22 @@ package org.beatonma.lib.ui.activity;
 
 import android.app.Activity;
 import android.content.Context;
-import androidx.databinding.DataBindingUtil;
-import androidx.databinding.ViewDataBinding;
 import android.os.Bundle;
-import androidx.annotation.CallSuper;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import com.google.android.material.snackbar.Snackbar;
-import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.lang.ref.WeakReference;
+
+import androidx.annotation.CallSuper;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
+import androidx.fragment.app.Fragment;
 
 /**
  * Created by Michael on 05/08/2016.
@@ -53,7 +55,7 @@ public abstract class BaseFragment extends Fragment {
     }
 
     public BaseActivity getParentActivity() {
-        Activity activity = getActivity();
+        final Activity activity = getActivity();
         if (activity instanceof BaseActivity) {
             return (BaseActivity) activity;
         }
@@ -61,7 +63,7 @@ public abstract class BaseFragment extends Fragment {
     }
 
     public void showSnackbar(final String message) {
-        Activity activity = getActivity();
+        final Activity activity = getActivity();
         if (activity instanceof BaseActivity) {
             ((BaseActivity) activity).showSnackbar(message);
         }
@@ -70,8 +72,8 @@ public abstract class BaseFragment extends Fragment {
         }
     }
 
-    public com.google.android.material.snackbar.Snackbar getSnackbar(final String message) {
-        Activity activity = getActivity();
+    public Snackbar getSnackbar(final String message) {
+        final Activity activity = getActivity();
         if (activity instanceof BaseActivity) {
             return ((BaseActivity) activity).getSnackbar(message);
         }
