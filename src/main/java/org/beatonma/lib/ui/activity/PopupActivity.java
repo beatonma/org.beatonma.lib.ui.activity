@@ -183,6 +183,10 @@ public abstract class PopupActivity<T extends ViewDataBinding> extends BaseActiv
         Views.hideIfEmpty(mBinding.title);
     }
 
+    public void setTitle(final int resId) {
+        setTitle(getString(resId));
+    }
+
 //    public void setExtraWide() {
 //        mBinding.card.setMaxWidth(getResources().getDimension(R.dimen.max_dialog_width_extra));
 //        mBinding.card.wrapContent(true);
