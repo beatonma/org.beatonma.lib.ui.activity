@@ -6,8 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import android.util.Pair;
 import android.view.View;
 
@@ -16,11 +14,16 @@ import org.beatonma.lib.log.Log;
 import org.beatonma.lib.ui.activity.transition.BaseTransform;
 
 import java.io.Serializable;
+import java.lang.ref.WeakReference;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 /**
  * Created by Michael on 09/09/2016.
@@ -37,8 +40,8 @@ import java.util.List;
 public class ActivityBuilder {
     protected final static String TAG = "ActivityBuilder";
 
-    private Context mContext;
-    private androidx.fragment.app.Fragment mFragment;
+    private WeakReference<Context> mContext;
+    private WeakReference<Fragment> mFragment;
     private boolean mForResult = false;
     private int mRequestCode;
     private Intent mIntent;
@@ -62,123 +65,137 @@ public class ActivityBuilder {
     /**
      *
      */
-    public static Constructor with(@NonNull final Context context) {
+    @NonNull
+    public static Constructor from(@NonNull final Context context) {
         return new Constructor(context);
     }
 
+    @NonNull
+    @Deprecated
     public static ActivityBuilder forActivity(@NonNull final Context context,
                                               @NonNull final Class cls) {
         return new ActivityBuilder(context, cls);
     }
 
-    public static ActivityBuilder forActivity(@NonNull final Context context,
-                                              @NonNull final Intent intent) {
-        return new ActivityBuilder(context, intent);
-    }
-
     private ActivityBuilder(@NonNull final Context context) {
-        mContext = context;
+        mContext = new WeakReference<>(context);
         mSharedViews = new ArrayList<>();
         mExtras = new Bundle();
     }
 
-    public ActivityBuilder(@NonNull final Context context, @NonNull final Class cls) {
-        this(context, new Intent(context, cls));
-    }
-
-    public ActivityBuilder(@NonNull final Context context, @NonNull final Intent intent) {
+    private ActivityBuilder(@NonNull final Context context, @NonNull final Class cls) {
         this(context);
-        mIntent = intent;
+        mIntent = new Intent(context, cls);
     }
 
-    public ActivityBuilder setClass(final Class cls) {
-        mIntent = new Intent(mContext, cls);
+    @NonNull
+    public ActivityBuilder setClass(@NonNull final Class cls) {
+        mIntent = new Intent(mContext.get(), cls);
         return this;
     }
 
-    public ActivityBuilder setIntent(final Intent intent) {
+    @NonNull
+    public ActivityBuilder setIntent(@NonNull final Intent intent) {
         mIntent = intent;
         return this;
     }
 
+    @NonNull
     public ActivityBuilder forResult(final int requestCode) {
         mForResult = true;
         mRequestCode = requestCode;
         return this;
     }
 
-    public ActivityBuilder forResult(final Fragment fragment, final int requestCode) {
-        mFragment = fragment;
+    @NonNull
+    public ActivityBuilder forResult(@Nullable final Fragment fragment, final int requestCode) {
+        mFragment = new WeakReference<>(fragment);
         mForResult = true;
         mRequestCode = requestCode;
         return this;
     }
 
-    public ActivityBuilder addSharedViews(final Pair<View, String>... sharedViews) {
-        Collections.addAll(mSharedViews, sharedViews);
+    @NonNull
+    public ActivityBuilder addSharedViews(@Nullable final Pair<View, String>... sharedViews) {
+        if (sharedViews != null) {
+            Collections.addAll(mSharedViews, sharedViews);
+        }
         return this;
     }
 
-    public ActivityBuilder addSharedView(final Pair<View, String> sharedView) {
+    @NonNull
+    public ActivityBuilder addSharedView(@NonNull final Pair<View, String> sharedView) {
         mSharedViews.add(sharedView);
         return this;
     }
 
-    public ActivityBuilder addSharedView(final View view, final String transitionName) {
+    @NonNull
+    public ActivityBuilder addSharedView(@NonNull final View view, @NonNull final String transitionName) {
         mSharedViews.add(new Pair<> (view, transitionName));
         return this;
     }
 
-    public ActivityBuilder addSharedView(final View view, final int transitionResourceId) {
-        return addSharedView(view, mContext.getString(transitionResourceId));
+    @NonNull
+    public ActivityBuilder addSharedView(@NonNull final View view, final int transitionResourceId) {
+        return addSharedView(view, mContext.get().getString(transitionResourceId));
     }
 
-    public ActivityBuilder putExtra(final String name, final boolean value) {
+    @NonNull
+    public ActivityBuilder putExtra(@NonNull final String name, final boolean value) {
         mExtras.putBoolean(name, value);
         return this;
     }
 
-    public ActivityBuilder putExtra(final String name, final int value) {
+    @NonNull
+    public ActivityBuilder putExtra(@NonNull final String name, final int value) {
         mExtras.putInt(name, value);
         return this;
     }
 
-    public ActivityBuilder putExtra(final String name, final float value) {
+    @NonNull
+    public ActivityBuilder putExtra(@NonNull final String name, final float value) {
         mExtras.putFloat(name, value);
         return this;
     }
 
-    public ActivityBuilder putExtra(final String name, final String value) {
+    @NonNull
+    public ActivityBuilder putExtra(@NonNull final String name, @NonNull final String value) {
         mExtras.putString(name, value);
         return this;
     }
 
-    public ActivityBuilder putExtra(final String name, final Serializable value) {
+    @NonNull
+    public ActivityBuilder putExtra(@NonNull final String name, @NonNull final Serializable value) {
         mExtras.putSerializable(name, value);
         return this;
     }
 
-    public ActivityBuilder putExtra(final String name, final Bundle value) {
+    @NonNull
+    public ActivityBuilder putExtra(@NonNull final String name, @NonNull final Bundle value) {
         mExtras.putBundle(name, value);
         return this;
     }
 
-    public ActivityBuilder putExtraStringArrayList(final String name, final ArrayList<String> value) {
+    @NonNull
+    public ActivityBuilder putExtraStringArrayList(@NonNull final String name, @NonNull final ArrayList<String> value) {
         mExtras.putStringArrayList(name, value);
         return this;
     }
 
-    public ActivityBuilder putExtraIntArrayList(final String name, final ArrayList<Integer> value) {
+    @NonNull
+    public ActivityBuilder putExtraIntArrayList(@NonNull final String name, @NonNull final ArrayList<Integer> value) {
         mExtras.putIntegerArrayList(name, value);
         return this;
     }
 
-    public ActivityBuilder putExtraParcelableArrayList(final String name, final ArrayList<? extends Parcelable> value) {
+    @NonNull
+    public ActivityBuilder putExtraParcelableArrayList(@NonNull final String name, @NonNull final ArrayList<? extends Parcelable> value) {
         mExtras.putParcelableArrayList(name, value);
         return this;
     }
 
-    private ActivityBuilder putExtra(final String name, final Object value) throws ClassCastException {
+    @NonNull
+    private ActivityBuilder putExtra(@NonNull final String name, @NonNull final Object value) throws ClassCastException {
         if (value instanceof Integer) {
             return putExtra(name, (Integer) value);
         }
@@ -208,35 +225,42 @@ public class ActivityBuilder {
      * @param intent
      * @return
      */
-    public ActivityBuilder putExtras(final Intent intent) {
+    @NonNull
+    public ActivityBuilder putExtras(@NonNull final Intent intent) {
         mIntent.putExtras(intent);
         return this;
     }
 
-    public ActivityBuilder putExtras(final Bundle bundle) {
+    @NonNull
+    public ActivityBuilder putExtras(@NonNull final Bundle bundle) {
         mIntent.putExtras(bundle);
         return this;
     }
 
+    @Nullable
     public View animationSource() {
         return mAnimationSource;
     }
 
-    public ActivityBuilder animationSource(final View animationSource) {
+    @NonNull
+    public ActivityBuilder animationSource(@Nullable final View animationSource) {
         mAnimationSource = animationSource;
         return this;
     }
 
+    @NonNull
     public boolean usePopupTransition() {
         return mUsePopupTransition;
     }
 
+    @NonNull
     public ActivityBuilder usePopupTransition(final boolean popupTransition) {
         mUsePopupTransition = popupTransition;
         return this;
     }
 
-    public ActivityBuilder transform(final Class<? extends BaseTransform> transform) {
+    @NonNull
+    public ActivityBuilder transform(@Nullable final Class<? extends BaseTransform> transform) {
         mTransform = transform;
         return this;
     }
@@ -249,7 +273,7 @@ public class ActivityBuilder {
     private void addTransitionExtras() {
         if (mTransform != null) {
             try {
-                Method addExtras = mTransform.getMethod("addExtras", Intent.class, View.class);
+                final Method addExtras = mTransform.getMethod("addExtras", Intent.class, View.class);
                 addExtras.invoke(null, mIntent, mAnimationSource);
                 return;
             }
@@ -275,25 +299,27 @@ public class ActivityBuilder {
             throw new NullPointerException("Intent is missing. A target Class or Intent must be provided.");
         }
 
+        final Context context = mContext.get();
+
         mIntent.putExtras(mExtras);
 
-        if (mContext instanceof BaseActivity) {
+        if (context instanceof BaseActivity) {
             startWithActivityContext();
         }
         else {
             mIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            mContext.startActivity(mIntent);
+            context.startActivity(mIntent);
         }
     }
 
     @SuppressWarnings("NewApi")
     private void startWithActivityContext() {
-        final Activity activity = (Activity) mContext;
+        final Activity activity = (Activity) mContext.get();
 
         if (mUsePopupTransition) {
-            if (mContext instanceof BaseActivity) {
-                addSharedViews(((BaseActivity) mContext).getSharedViews());
-                if (mContext instanceof PopupActivity) {
+            if (activity instanceof BaseActivity) {
+                addSharedViews(((BaseActivity) activity).getSharedViews());
+                if (activity instanceof PopupActivity) {
                     mIntent.putExtra(PopupActivity.EXTRA_CALLED_FROM_POPUP, true);
                 }
             }
@@ -314,26 +340,23 @@ public class ActivityBuilder {
             for (int i = 0; i < mSharedViews.size(); i++) {
                 sharedViews[i] = mSharedViews.get(i);
             }
-            Log.d(TAG, "shared views: %d", mSharedViews.size());
             final ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(activity, sharedViews);
             if (mForResult) {
                 if (mFragment != null) {
-                    mFragment.startActivityForResult(mIntent, mRequestCode, options.toBundle());
+                    mFragment.get().startActivityForResult(mIntent, mRequestCode, options.toBundle());
                 }
                 else {
-                    Log.d(TAG, "Starting activity with animation");
                     activity.startActivityForResult(mIntent, mRequestCode, options.toBundle());
                 }
             }
             else {
-                Log.d(TAG, "Starting activity with animation");
                 activity.startActivity(mIntent, options.toBundle());
             }
         }
         else {
             if (mForResult) {
                 if (mFragment != null) {
-                    mFragment.startActivityForResult(mIntent, mRequestCode);
+                    mFragment.get().startActivityForResult(mIntent, mRequestCode);
                 }
                 else {
                     activity.startActivityForResult(mIntent, mRequestCode);
@@ -347,18 +370,14 @@ public class ActivityBuilder {
 
 
     public static class Constructor {
-        private Context context;
+        private WeakReference<Context> context;
 
-        public Constructor(Context context) {
-            this.context = context;
+        Constructor(@NonNull final Context context) {
+            this.context = new WeakReference<>(context);
         }
 
-        public ActivityBuilder target(Class cls) {
-            return new ActivityBuilder(this.context, cls);
-        }
-
-        public ActivityBuilder target(Intent intent) {
-            return new ActivityBuilder(this.context, intent);
+        public ActivityBuilder to(@NonNull final Class cls) {
+            return new ActivityBuilder(context.get(), cls);
         }
     }
 }
