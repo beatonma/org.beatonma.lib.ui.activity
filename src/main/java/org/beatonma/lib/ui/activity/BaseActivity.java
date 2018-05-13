@@ -38,7 +38,7 @@ public abstract class BaseActivity<T extends ViewDataBinding> extends AppCompatA
 
         mWeakContext = new WeakReference<>(this);
 
-        final SharedPreferences prefs = getSharedPreferences("theme", MODE_PRIVATE);
+        final SharedPreferences prefs = getSharedPreferences("app", MODE_PRIVATE);
         final boolean forceNight = prefs.getBoolean(UI_DARK_THEME, false);
         AppCompatDelegate.setDefaultNightMode(
                 forceNight
@@ -96,13 +96,10 @@ public abstract class BaseActivity<T extends ViewDataBinding> extends AppCompatA
 
     public Pair<View, String>[] getSharedViews() {
         final Resources res = getResources();
-        View v = findViewById(R.id.stub);
+        final View v = findViewById(R.id.stub);
         if (v == null) {
-            View parent = getBinding().getRoot();
-            if (parent instanceof ViewGroup) {
-                v = LayoutInflater.from(this).inflate(R.layout.stub, (ViewGroup) parent);
-                Log.w(TAG, "Injected a stub view into layout parent for activity transition - please include a stub in the activity layout file to improve performance!");
-            }
+            Log.w(TAG, "View stub is missing so activity animation will fail - please add  <include layout=\"@layout/stub\"/> to your layout");
+            return null;
         }
         return new Pair[] {
                 Pair.create(v, res.getString(R.string.transition_card))
