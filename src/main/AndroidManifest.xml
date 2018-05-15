@@ -3,7 +3,7 @@
     package="org.beatonma.lib.ui.activity">
     <application>
         <activity
-            android:name=".PopupMessageActivity"
+            android:name=".popup.PopupMessageActivity"
             android:theme="@style/Beatonma.AppTheme.Floating"/>
     </application>
 </manifest>
