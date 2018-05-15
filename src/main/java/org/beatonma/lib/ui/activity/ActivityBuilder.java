@@ -1,16 +1,15 @@
 package org.beatonma.lib.ui.activity;
 
 import android.app.Activity;
-import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.util.Pair;
 import android.view.View;
 
 import org.beatonma.lib.core.util.Sdk;
 import org.beatonma.lib.log.Log;
+import org.beatonma.lib.ui.activity.popup.BasePopupActivity;
 import org.beatonma.lib.ui.activity.transition.BaseTransform;
 
 import java.io.Serializable;
@@ -23,6 +22,8 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 
 /**
@@ -319,8 +320,8 @@ public class ActivityBuilder {
         if (mUsePopupTransition) {
             if (activity instanceof BaseActivity) {
                 addSharedViews(((BaseActivity) activity).getSharedViews());
-                if (activity instanceof PopupActivity) {
-                    mIntent.putExtra(PopupActivity.EXTRA_CALLED_FROM_POPUP, true);
+                if (activity instanceof BasePopupActivity) {
+                    mIntent.putExtra(BasePopupActivity.EXTRA_CALLED_FROM_POPUP, true);
                 }
             }
         }
@@ -340,7 +341,9 @@ public class ActivityBuilder {
             for (int i = 0; i < mSharedViews.size(); i++) {
                 sharedViews[i] = mSharedViews.get(i);
             }
-            final ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(activity, sharedViews);
+            final ActivityOptionsCompat options =
+                    ActivityOptionsCompat.makeSceneTransitionAnimation(activity, sharedViews);
+
             if (mForResult) {
                 if (mFragment != null) {
                     mFragment.get().startActivityForResult(mIntent, mRequestCode, options.toBundle());

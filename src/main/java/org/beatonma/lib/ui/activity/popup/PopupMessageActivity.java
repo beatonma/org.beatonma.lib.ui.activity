@@ -1,16 +1,19 @@
-package org.beatonma.lib.ui.activity;
+package org.beatonma.lib.ui.activity.popup;
 
-import androidx.databinding.ViewDataBinding;
+import android.app.Activity;
 import android.os.Bundle;
 import android.text.TextUtils;
 
+import org.beatonma.lib.ui.activity.R;
 import org.beatonma.lib.ui.activity.databinding.ActivityPopupMessageBinding;
+
+import androidx.databinding.ViewDataBinding;
 
 /**
  * Created by Michael on 08/05/2017.
  * A simple dialog with a custom message and button text
  */
-public class PopupMessageActivity extends PopupActivity {
+public class PopupMessageActivity extends PopupActivity<ActivityPopupMessageBinding> {
     protected final static String TAG = "PopupMessageActivity";
 
     public final static String EXTRA_MESSAGE = "extra_message";
@@ -33,13 +36,13 @@ public class PopupMessageActivity extends PopupActivity {
         mBinding.setMessage(mMessage);
 
         mBinding.positiveButton.setOnClickListener(v -> {
-            PopupMessageActivity.this.setResult(RESULT_OK);
-            PopupMessageActivity.this.close();
+            setResult(Activity.RESULT_OK);
+            close();
         });
 
         mBinding.negativeButton.setOnClickListener(v -> {
-            PopupMessageActivity.this.setResult(RESULT_CANCELED);
-            PopupMessageActivity.this.close();
+            setResult(Activity.RESULT_CANCELED);
+            close();
         });
     }
 
@@ -48,7 +51,7 @@ public class PopupMessageActivity extends PopupActivity {
         super.initExtras(extras);
 
         if (extras != null) {
-            Object messageObj = extras.get(EXTRA_MESSAGE);
+            final Object messageObj = extras.get(EXTRA_MESSAGE);
             String message = null;
             if (messageObj != null) {
                 if (messageObj instanceof String) {
@@ -75,7 +78,7 @@ public class PopupMessageActivity extends PopupActivity {
         return mBinding;
     }
 
-    public class Message {
+    public static class Message {
         private String message;
         private String positiveButtonText;
         private String negativeButtonText;

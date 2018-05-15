@@ -5,19 +5,20 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.graphics.Path;
 import android.graphics.Rect;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import android.transition.TransitionValues;
 import android.view.View;
 import android.view.ViewGroup;
 
 import org.beatonma.lib.core.util.Sdk;
-import org.beatonma.lib.ui.activity.PopupActivity;
+import org.beatonma.lib.ui.activity.popup.BasePopupActivity;
 import org.beatonma.lib.ui.activity.R;
 import org.beatonma.lib.ui.style.Interpolate;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import static android.view.View.MeasureSpec.makeMeasureSpec;
 
@@ -52,7 +53,7 @@ public class SharedPopupTransform extends BaseTransform {
     }
 
     @SuppressWarnings("NewApi")
-    public static void setup(@NonNull PopupActivity activity, @Nullable View target) {
+    public static void setup(@NonNull BasePopupActivity activity, @Nullable View target) {
         if (!Sdk.isKitkat()) {
             return;
         }
