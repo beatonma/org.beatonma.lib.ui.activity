@@ -16,10 +16,10 @@ android {
 }
 
 dependencies {
-    implementation "com.google.android.material:material:$materialVersion"
+    implementation "com.google.android.material:material:$versions.androidx"
+    implementation "androidx.constraintlayout:constraintlayout:$versions.constraint"
 
     api project(":core")
     api project(":modules:ui:style")
     api project(":modules:log")
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.0'
 }
