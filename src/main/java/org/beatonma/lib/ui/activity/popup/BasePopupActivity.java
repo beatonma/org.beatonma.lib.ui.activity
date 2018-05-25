@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import org.beatonma.lib.core.util.Sdk;
 import org.beatonma.lib.ui.activity.BaseActivity;
+import org.beatonma.lib.ui.activity.BuildConfig;
 import org.beatonma.lib.ui.activity.R;
 import org.beatonma.lib.ui.activity.transition.CircularTransform;
 import org.beatonma.lib.ui.activity.transition.SharedPopupTransform;
@@ -84,6 +85,12 @@ public abstract class BasePopupActivity<T extends ViewDataBinding> extends BaseA
                         : R.color.DialogOverlay));
 
         overlay.setOnClickListener(view -> close());
+        if (BuildConfig.DEBUG) {
+            overlay.setOnLongClickListener(view -> {
+                toggleForceNight();
+                return true;
+            });
+        }
 
         cardContentContainer.animate()
                 .alpha(1)
@@ -202,14 +209,14 @@ public abstract class BasePopupActivity<T extends ViewDataBinding> extends BaseA
      * Animate the container card when contents change bounds
      */
     @SuppressWarnings("NewApi")
-    protected void resize() {
+    protected void prepareResize() {
         final Context context = mWeakContext.get();
         if (context == null) {
             return;
         }
 
         if (Sdk.isKitkat()) {
-            Transition changeBounds = TransitionInflater.from(context)
+            final Transition changeBounds = TransitionInflater.from(context)
                     .inflateTransition(R.transition.card_changebounds);
             TransitionManager.beginDelayedTransition(getCard(), changeBounds);
         }
