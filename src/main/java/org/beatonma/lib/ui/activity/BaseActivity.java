@@ -28,6 +28,7 @@ import androidx.databinding.ViewDataBinding;
 public abstract class BaseActivity<T extends ViewDataBinding> extends AppCompatActivity {
     protected final static String TAG = "BaseActivity";
 
+    public final static String THEME_PREFS = "app";
     public final static String UI_DARK_THEME = "pref_dark_theme";
 
     protected WeakReference<BaseActivity<T>> mWeakContext;
@@ -38,7 +39,7 @@ public abstract class BaseActivity<T extends ViewDataBinding> extends AppCompatA
 
         mWeakContext = new WeakReference<>(this);
 
-        final SharedPreferences prefs = getSharedPreferences("app", MODE_PRIVATE);
+        final SharedPreferences prefs = getSharedPreferences(THEME_PREFS, MODE_PRIVATE);
         final boolean forceNight = prefs.getBoolean(UI_DARK_THEME, false);
         AppCompatDelegate.setDefaultNightMode(
                 forceNight
@@ -132,5 +133,20 @@ public abstract class BaseActivity<T extends ViewDataBinding> extends AppCompatA
     @CallSuper
     public void close() {
         supportFinishAfterTransition();
+    }
+
+    public void forceNight(final boolean forceNight) {
+        getSharedPreferences(THEME_PREFS, MODE_PRIVATE).edit()
+                .putBoolean(UI_DARK_THEME, forceNight)
+                .commit();
+        recreate();
+    }
+
+    /**
+     * Toggle forceNight()
+     */
+    public void toggleForceNight() {
+        forceNight(!getSharedPreferences(THEME_PREFS, MODE_PRIVATE)
+                .getBoolean(UI_DARK_THEME, true));
     }
 }
