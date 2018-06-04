@@ -13,7 +13,7 @@ import androidx.databinding.ViewDataBinding;
  * Created by Michael on 08/05/2017.
  * A simple dialog with a custom message and button text
  */
-public class PopupMessageActivity extends PopupActivity<ActivityPopupMessageBinding> {
+public class PopupMessageActivity extends PopupActivity {
     protected final static String TAG = "PopupMessageActivity";
 
     public final static String EXTRA_MESSAGE = "extra_message";
@@ -71,11 +71,6 @@ public class PopupMessageActivity extends PopupActivity<ActivityPopupMessageBind
                     .positiveButtonText(extras.getString(EXTRA_POSITIVE_BUTTON))
                     .negativeButtonText(extras.getString(EXTRA_NEGATIVE_BUTTON));
         }
-    }
-
-    @Override
-    protected ActivityPopupMessageBinding getBinding() {
-        return mBinding;
     }
 
     public static class Message {
