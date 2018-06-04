@@ -76,7 +76,7 @@ public abstract class BaseTransform extends Transition {
 
     @SuppressWarnings("NewApi")
     protected void captureValues(TransitionValues transitionValues) {
-        if (!Sdk.isKitkat()) {
+        if (!Sdk.INSTANCE.isKitkat()) {
             return;
         }
         final View view = transitionValues.view;

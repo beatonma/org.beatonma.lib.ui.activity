@@ -38,7 +38,7 @@ public class SharedPopupTransform extends BaseTransform {
     private boolean mReturn = false;
 
     private SharedPopupTransform(int[] start) {
-        if (Sdk.isLollipop()) {
+        if (Sdk.INSTANCE.isLollipop()) {
             setPathMotion(new GravityArcMotion());
         }
         if (start != null) {
@@ -54,7 +54,7 @@ public class SharedPopupTransform extends BaseTransform {
 
     @SuppressWarnings("NewApi")
     public static void setup(@NonNull BasePopupActivity activity, @Nullable View target) {
-        if (!Sdk.isKitkat()) {
+        if (!Sdk.INSTANCE.isKitkat()) {
             return;
         }
 
@@ -77,7 +77,7 @@ public class SharedPopupTransform extends BaseTransform {
                                    final TransitionValues startValues,
                                    final TransitionValues endValues) {
 
-        if (!Sdk.isKitkat()) {
+        if (!Sdk.INSTANCE.isKitkat()) {
             return null;
         }
 
@@ -94,7 +94,7 @@ public class SharedPopupTransform extends BaseTransform {
 
         ObjectAnimator topLeftAnimator = null;
         ObjectAnimator bottomRightAnimator = null;
-        if (Sdk.isLollipop()) {
+        if (Sdk.INSTANCE.isLollipop()) {
             if (startBounds.left != endBounds.left || startBounds.top != endBounds.top) {
                 Path topLeftPath = getPathMotion().getPath(startBounds.left, startBounds.top,
                         endBounds.left, endBounds.top);
@@ -179,7 +179,7 @@ public class SharedPopupTransform extends BaseTransform {
     @SuppressWarnings("NewApi")
     @Override
     protected void captureValues(TransitionValues transitionValues) {
-        if (!Sdk.isKitkat()) {
+        if (!Sdk.INSTANCE.isKitkat()) {
             return;
         }
         final View view = transitionValues.view.findViewById(R.id.card);
