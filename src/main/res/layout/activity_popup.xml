@@ -1,44 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/top_level_container">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:elevation="48dp"
-            android:gravity="center">
-            <View
-                android:id="@+id/stub"
-                style="@style/SharedViewStub"/>
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/overlay"/>
+  <androidx.coordinatorlayout.widget.CoordinatorLayout
+    android:id="@+id/top_level_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-            <LinearLayout
-                android:id="@+id/card"
-                android:layout_centerInParent="true"
-                android:transitionName="@string/transition_card"
-                android:orientation="vertical"
-                style="@style/Card.FullWidthOnSmall">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/title"
-                    style="@style/Text.Primary.Header.Card"/>
+    <View
+      android:id="@+id/overlay"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"/>
 
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:id="@+id/content_container"
-                    android:alpha="0"/>
-            </LinearLayout>
-        </RelativeLayout>
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <View
+      android:id="@+id/stub"
+      style="@style/SharedViewStub"/>
+
+    <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:fitsSystemWindows="true">
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/card"
+        style="@style/Card.FullWidthOnSmall"
+        android:layout_gravity="center"
+        android:elevation="48dp"
+        android:orientation="vertical"
+        android:transitionName="@string/transition_card">
+
+        <TextView
+          android:id="@+id/title"
+          style="@style/Text.Primary.Header.Card"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          tools:text="Card Title"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent"/>
+
+        <FrameLayout
+          android:id="@+id/content_container"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:alpha="0"
+          android:gravity="center"
+          app:layout_constraintBottom_toTopOf="@+id/button_barrier"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/title"/>
+
+        <androidx.constraintlayout.widget.Barrier
+          android:id="@+id/button_barrier"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          app:barrierDirection="top"
+          app:constraint_referenced_ids="button_positive,button_negative,button_custom_action"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+          android:id="@+id/button_custom_action"
+          style="@style/Button.Flat.Dialog"
+          android:text="_"
+          android:textColor="@color/TextSecondary"
+          android:visibility="gone"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/content_container"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+          android:id="@+id/button_negative"
+          style="@style/Button.Flat.Dialog"
+          android:text="@string/dialog_cancel"
+          android:visibility="gone"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toStartOf="@+id/button_positive"
+          app:layout_constraintHorizontal_bias="1.0"
+          app:layout_constraintStart_toEndOf="@+id/button_custom_action"
+          app:layout_constraintTop_toBottomOf="@+id/content_container"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+          android:id="@+id/button_positive"
+          style="@style/Button.Flat.Dialog"
+          android:text="@string/dialog_ok"
+          android:visibility="gone"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintHorizontal_bias="1.0"
+          app:layout_constraintTop_toBottomOf="@+id/content_container"/>
+      </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
+  </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
