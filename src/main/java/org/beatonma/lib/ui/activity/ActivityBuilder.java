@@ -321,13 +321,13 @@ public class ActivityBuilder {
             if (activity instanceof BaseActivity) {
                 addSharedViews(((BaseActivity) activity).getSharedViews());
                 if (activity instanceof BasePopupActivity) {
-                    mIntent.putExtra(BasePopupActivity.EXTRA_CALLED_FROM_POPUP, true);
+                    mIntent.putExtra(BasePopupActivity.Companion.getEXTRA_CALLED_FROM_POPUP(), true);
                 }
             }
         }
 
         if (mAnimationSource != null) {
-            if (Sdk.isKitkat()) {
+            if (Sdk.INSTANCE.isKitkat()) {
 //                BaseTransform.addExtras(mIntent, mAnimationSource);
                 addTransitionExtras();
             }
@@ -336,7 +336,7 @@ public class ActivityBuilder {
             }
         }
 
-        if (Sdk.isLollipop() && mSharedViews != null) {
+        if (Sdk.INSTANCE.isLollipop() && mSharedViews != null) {
             final Pair<View, String>[] sharedViews = new Pair[mSharedViews.size()];
             for (int i = 0; i < mSharedViews.size(); i++) {
                 sharedViews[i] = mSharedViews.get(i);
