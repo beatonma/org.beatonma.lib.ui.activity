@@ -28,12 +28,12 @@
             android:gravity="bottom|end"
             android:id="@+id/buttons"
             style="@style/DialogButtonContainer">
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/negative_button"
                 android:text="@{TextUtils.isEmpty(message.negativeButtonText()) ? @string/dialog_cancel : message.negativeButtonText()}"
                 android:visibility="@{message.showNegative() ? View.VISIBLE : View.GONE}"
                 style="@style/Button.Flat" />
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/positive_button"
                 android:text="@{TextUtils.isEmpty(message.positiveButtonText()) ? @string/dialog_ok : message.positiveButtonText()}"
                 style="@style/Button.Flat" />
