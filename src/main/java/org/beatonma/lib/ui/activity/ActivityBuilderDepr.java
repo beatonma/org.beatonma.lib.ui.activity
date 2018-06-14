@@ -37,8 +37,10 @@ import androidx.fragment.app.Fragment;
  * Using this builder we can support arbitrary argument sets in a clean manner.
  */
 
+
+@Deprecated
 @SuppressWarnings("unused")
-public class ActivityBuilder {
+public class ActivityBuilderDepr {
     protected final static String TAG = "ActivityBuilder";
 
     private WeakReference<Context> mContext;
@@ -73,43 +75,43 @@ public class ActivityBuilder {
 
     @NonNull
     @Deprecated
-    public static ActivityBuilder forActivity(@NonNull final Context context,
-                                              @NonNull final Class cls) {
-        return new ActivityBuilder(context, cls);
+    public static ActivityBuilderDepr forActivity(@NonNull final Context context,
+                                                  @NonNull final Class cls) {
+        return new ActivityBuilderDepr(context, cls);
     }
 
-    private ActivityBuilder(@NonNull final Context context) {
+    private ActivityBuilderDepr(@NonNull final Context context) {
         mContext = new WeakReference<>(context);
         mSharedViews = new ArrayList<>();
         mExtras = new Bundle();
     }
 
-    private ActivityBuilder(@NonNull final Context context, @NonNull final Class cls) {
+    private ActivityBuilderDepr(@NonNull final Context context, @NonNull final Class cls) {
         this(context);
         mIntent = new Intent(context, cls);
     }
 
     @NonNull
-    public ActivityBuilder setClass(@NonNull final Class cls) {
+    public ActivityBuilderDepr setClass(@NonNull final Class cls) {
         mIntent = new Intent(mContext.get(), cls);
         return this;
     }
 
     @NonNull
-    public ActivityBuilder setIntent(@NonNull final Intent intent) {
+    public ActivityBuilderDepr setIntent(@NonNull final Intent intent) {
         mIntent = intent;
         return this;
     }
 
     @NonNull
-    public ActivityBuilder forResult(final int requestCode) {
+    public ActivityBuilderDepr forResult(final int requestCode) {
         mForResult = true;
         mRequestCode = requestCode;
         return this;
     }
 
     @NonNull
-    public ActivityBuilder forResult(@Nullable final Fragment fragment, final int requestCode) {
+    public ActivityBuilderDepr forResult(@Nullable final Fragment fragment, final int requestCode) {
         mFragment = new WeakReference<>(fragment);
         mForResult = true;
         mRequestCode = requestCode;
@@ -117,7 +119,7 @@ public class ActivityBuilder {
     }
 
     @NonNull
-    public ActivityBuilder addSharedViews(@Nullable final Pair<View, String>... sharedViews) {
+    public ActivityBuilderDepr addSharedViews(@Nullable final Pair<View, String>... sharedViews) {
         if (sharedViews != null) {
             Collections.addAll(mSharedViews, sharedViews);
         }
@@ -125,78 +127,89 @@ public class ActivityBuilder {
     }
 
     @NonNull
-    public ActivityBuilder addSharedView(@NonNull final Pair<View, String> sharedView) {
+    public ActivityBuilderDepr addSharedViews(@Nullable final SharedView... sharedViews) {
+        for (final SharedView sv : sharedViews) {
+            mSharedViews.add(Pair.create(sv.getView(), sv.getTransitionName()));
+        }
+//        if (sharedViews != null) {
+//            Collections.addAll(mSharedViews, sharedViews);
+//        }
+        return this;
+    }
+
+    @NonNull
+    public ActivityBuilderDepr addSharedView(@NonNull final Pair<View, String> sharedView) {
         mSharedViews.add(sharedView);
         return this;
     }
 
     @NonNull
-    public ActivityBuilder addSharedView(@NonNull final View view, @NonNull final String transitionName) {
+    public ActivityBuilderDepr addSharedView(@NonNull final View view, @NonNull final String transitionName) {
         mSharedViews.add(new Pair<> (view, transitionName));
         return this;
     }
 
     @NonNull
-    public ActivityBuilder addSharedView(@NonNull final View view, final int transitionResourceId) {
+    public ActivityBuilderDepr addSharedView(@NonNull final View view, final int transitionResourceId) {
         return addSharedView(view, mContext.get().getString(transitionResourceId));
     }
 
     @NonNull
-    public ActivityBuilder putExtra(@NonNull final String name, final boolean value) {
+    public ActivityBuilderDepr putExtra(@NonNull final String name, final boolean value) {
         mExtras.putBoolean(name, value);
         return this;
     }
 
     @NonNull
-    public ActivityBuilder putExtra(@NonNull final String name, final int value) {
+    public ActivityBuilderDepr putExtra(@NonNull final String name, final int value) {
         mExtras.putInt(name, value);
         return this;
     }
 
     @NonNull
-    public ActivityBuilder putExtra(@NonNull final String name, final float value) {
+    public ActivityBuilderDepr putExtra(@NonNull final String name, final float value) {
         mExtras.putFloat(name, value);
         return this;
     }
 
     @NonNull
-    public ActivityBuilder putExtra(@NonNull final String name, @NonNull final String value) {
+    public ActivityBuilderDepr putExtra(@NonNull final String name, @NonNull final String value) {
         mExtras.putString(name, value);
         return this;
     }
 
     @NonNull
-    public ActivityBuilder putExtra(@NonNull final String name, @NonNull final Serializable value) {
+    public ActivityBuilderDepr putExtra(@NonNull final String name, @NonNull final Serializable value) {
         mExtras.putSerializable(name, value);
         return this;
     }
 
     @NonNull
-    public ActivityBuilder putExtra(@NonNull final String name, @NonNull final Bundle value) {
+    public ActivityBuilderDepr putExtra(@NonNull final String name, @NonNull final Bundle value) {
         mExtras.putBundle(name, value);
         return this;
     }
 
     @NonNull
-    public ActivityBuilder putExtraStringArrayList(@NonNull final String name, @NonNull final ArrayList<String> value) {
+    public ActivityBuilderDepr putExtraStringArrayList(@NonNull final String name, @NonNull final ArrayList<String> value) {
         mExtras.putStringArrayList(name, value);
         return this;
     }
 
     @NonNull
-    public ActivityBuilder putExtraIntArrayList(@NonNull final String name, @NonNull final ArrayList<Integer> value) {
+    public ActivityBuilderDepr putExtraIntArrayList(@NonNull final String name, @NonNull final ArrayList<Integer> value) {
         mExtras.putIntegerArrayList(name, value);
         return this;
     }
 
     @NonNull
-    public ActivityBuilder putExtraParcelableArrayList(@NonNull final String name, @NonNull final ArrayList<? extends Parcelable> value) {
+    public ActivityBuilderDepr putExtraParcelableArrayList(@NonNull final String name, @NonNull final ArrayList<? extends Parcelable> value) {
         mExtras.putParcelableArrayList(name, value);
         return this;
     }
 
     @NonNull
-    private ActivityBuilder putExtra(@NonNull final String name, @NonNull final Object value) throws ClassCastException {
+    private ActivityBuilderDepr putExtra(@NonNull final String name, @NonNull final Object value) throws ClassCastException {
         if (value instanceof Integer) {
             return putExtra(name, (Integer) value);
         }
@@ -227,13 +240,13 @@ public class ActivityBuilder {
      * @return
      */
     @NonNull
-    public ActivityBuilder putExtras(@NonNull final Intent intent) {
+    public ActivityBuilderDepr putExtras(@NonNull final Intent intent) {
         mIntent.putExtras(intent);
         return this;
     }
 
     @NonNull
-    public ActivityBuilder putExtras(@NonNull final Bundle bundle) {
+    public ActivityBuilderDepr putExtras(@NonNull final Bundle bundle) {
         mIntent.putExtras(bundle);
         return this;
     }
@@ -244,7 +257,7 @@ public class ActivityBuilder {
     }
 
     @NonNull
-    public ActivityBuilder animationSource(@Nullable final View animationSource) {
+    public ActivityBuilderDepr animationSource(@Nullable final View animationSource) {
         mAnimationSource = animationSource;
         return this;
     }
@@ -255,13 +268,13 @@ public class ActivityBuilder {
     }
 
     @NonNull
-    public ActivityBuilder usePopupTransition(final boolean popupTransition) {
+    public ActivityBuilderDepr usePopupTransition(final boolean popupTransition) {
         mUsePopupTransition = popupTransition;
         return this;
     }
 
     @NonNull
-    public ActivityBuilder transform(@Nullable final Class<? extends BaseTransform> transform) {
+    public ActivityBuilderDepr transform(@Nullable final Class<? extends BaseTransform> transform) {
         mTransform = transform;
         return this;
     }
@@ -379,8 +392,8 @@ public class ActivityBuilder {
             this.context = new WeakReference<>(context);
         }
 
-        public ActivityBuilder to(@NonNull final Class cls) {
-            return new ActivityBuilder(context.get(), cls);
+        public ActivityBuilderDepr to(@NonNull final Class cls) {
+            return new ActivityBuilderDepr(context.get(), cls);
         }
     }
 }
