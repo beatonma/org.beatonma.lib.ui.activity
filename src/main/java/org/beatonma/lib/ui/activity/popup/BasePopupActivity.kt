@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.CallSuper
 import androidx.appcompat.widget.AppCompatButton
-import androidx.core.util.Pair
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.transition.TransitionInflater
@@ -20,6 +19,7 @@ import org.beatonma.lib.core.util.Sdk
 import org.beatonma.lib.ui.activity.BaseActivity
 import org.beatonma.lib.ui.activity.BuildConfig
 import org.beatonma.lib.ui.activity.R
+import org.beatonma.lib.ui.activity.SharedView
 import org.beatonma.lib.ui.activity.transition.CircularTransform
 import org.beatonma.lib.ui.activity.transition.SharedPopupTransform
 import org.beatonma.lib.ui.style.Animation
@@ -223,9 +223,8 @@ abstract class BasePopupActivity : BaseActivity() {
         }
     }
 
-    override fun getSharedViews(): Array<Pair<View, String>>? {
-        val res = resources
 
-        return arrayOf<Pair<View, String>>(Pair.create(card, res.getString(R.string.transition_card)))
+    override fun getSharedViews(): Array<SharedView>? {
+        return arrayOf(SharedView(card, resources.getString(R.string.transition_card)))
     }
 }
