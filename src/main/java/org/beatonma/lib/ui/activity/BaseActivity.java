@@ -14,7 +14,6 @@ import androidx.annotation.CallSuper;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.util.Pair;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 
@@ -85,15 +84,16 @@ public abstract class BaseActivity extends AppCompatActivity {
 //        return v;
     }
 
-    public Pair<View, String>[] getSharedViews() {
+    @Nullable
+    public SharedView[] getSharedViews() {
         final Resources res = getResources();
         final View v = findViewById(R.id.stub);
         if (v == null) {
             Log.w(TAG, "View stub is missing so activity animation will fail - please add  <include layout=\"@layout/stub\"/> to your layout");
             return null;
         }
-        return new Pair[] {
-                Pair.create(v, res.getString(R.string.transition_card))
+        return new SharedView[] {
+                new SharedView(v, res.getString(R.string.transition_card))
         };
     }
 
