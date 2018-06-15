@@ -1,7 +1,6 @@
 package org.beatonma.lib.ui.activity.popup
 
 import android.content.Intent
-import android.net.http.SslCertificate.restoreState
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -15,6 +14,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.transition.TransitionInflater
 import androidx.transition.TransitionManager
 import org.beatonma.lib.core.kotlin.extensions.colorCompat
+import org.beatonma.lib.core.kotlin.extensions.hideIfEmpty
 import org.beatonma.lib.core.util.Sdk
 import org.beatonma.lib.ui.activity.BaseActivity
 import org.beatonma.lib.ui.activity.BuildConfig
@@ -24,7 +24,6 @@ import org.beatonma.lib.ui.activity.transition.CircularTransform
 import org.beatonma.lib.ui.activity.transition.SharedPopupTransform
 import org.beatonma.lib.ui.style.Animation
 import org.beatonma.lib.ui.style.Interpolate
-import org.beatonma.lib.ui.style.Views
 
 abstract class BasePopupActivity : BaseActivity() {
 
@@ -74,7 +73,7 @@ abstract class BasePopupActivity : BaseActivity() {
 
         setupWindowTransitions()
         initLayout(contentBinding)
-        restoreState(savedInstanceState)
+        updateState(savedInstanceState)
 
         setTitle(title)
 
@@ -120,24 +119,17 @@ abstract class BasePopupActivity : BaseActivity() {
     override fun initExtras(extras: Bundle?) {
         super.initExtras(extras)
 
-        if (extras == null) {
-            return
-        }
+        if (extras == null) return
 
-        val titleObj = extras.get(EXTRA_TITLE)
-        if (titleObj != null) {
-            if (titleObj is String) {
-                title = titleObj
-            } else if (titleObj is Int) {
-                if (titleObj != 0) {
-                    title = getString(titleObj)
-                }
-            }
+        val t = extras.get(EXTRA_TITLE)
+        when (t) {
+            is String -> title = t
+            is Int -> title = getString(t)
         }
     }
 
     @CallSuper
-    open fun setState(savedState: Bundle?) {
+    open fun updateState(savedState: Bundle?) {
 
     }
 
@@ -166,7 +158,7 @@ abstract class BasePopupActivity : BaseActivity() {
     fun setTitle(title: String?) {
         this.title = title
         titleView.text = title
-        Views.hideIfEmpty(titleView)
+        titleView.hideIfEmpty()
     }
 
     override fun setTitle(resId: Int) {
