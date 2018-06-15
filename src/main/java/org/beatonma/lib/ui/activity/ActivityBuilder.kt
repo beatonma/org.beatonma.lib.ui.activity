@@ -11,7 +11,6 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
 import androidx.fragment.app.Fragment
 import org.beatonma.lib.core.kotlin.extensions.autotag
-import org.beatonma.lib.core.kotlin.extensions.log
 import org.beatonma.lib.core.kotlin.extensions.stringCompat
 import org.beatonma.lib.core.util.Sdk
 import org.beatonma.lib.ui.activity.popup.BasePopupActivity
@@ -145,7 +144,6 @@ class ActivityBuilder(
     private fun createSharedViewsBundle(activity: BaseActivity): Bundle? {
         val sharedViews = Array(this.sharedViews.size) { sharedViews[it].asPair }
 
-        sharedViews.log("createSharedViewsBundle")
         return ActivityOptionsCompat.makeSceneTransitionAnimation(
                 activity, *sharedViews).toBundle()
     }
