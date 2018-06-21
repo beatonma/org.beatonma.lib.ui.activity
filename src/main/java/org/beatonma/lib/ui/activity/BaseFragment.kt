@@ -5,8 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.NonNull
-import androidx.annotation.Nullable
+import androidx.core.view.doOnPreDraw
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
@@ -15,12 +14,9 @@ import com.google.android.material.snackbar.Snackbar
 /**
  * Created by Michael on 05/08/2016.
  */
+private const val TAG = "BaseFragment"
 abstract class BaseFragment : Fragment() {
-    companion object {
-        protected const val TAG = "BaseFragment"
-    }
-
-    protected abstract val layoutId: Int
+    protected abstract val layoutID: Int
 
     val parentActivity: BaseActivity by lazy {
         if (activity is BaseActivity) {
@@ -31,32 +27,33 @@ abstract class BaseFragment : Fragment() {
     }
     val sharedViewStub: View? by lazy { parentActivity.sharedViewStub }
 
-    @Nullable
-    override fun onCreateView(@NonNull inflater: LayoutInflater,
-                              @Nullable container: ViewGroup?,
-                              @Nullable savedInstanceState: Bundle?): View {
-        val binding = DataBindingUtil.inflate<ViewDataBinding>(inflater, layoutId, container, false)
+    override fun onCreateView(inflater: LayoutInflater,
+                              container: ViewGroup?,
+                              savedInstanceState: Bundle?): View {
+        val binding = DataBindingUtil.inflate<ViewDataBinding>(inflater, layoutID, container, false)
 
         init(binding)
 
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        postponeEnterTransition()
+
+        (view.parent as? ViewGroup)?.doOnPreDraw {
+            startPostponedEnterTransition()
+        }
+    }
+
     protected abstract fun init(binding: ViewDataBinding)
 
     fun showSnackbar(message: String) {
-        val activity = activity
         (activity as? BaseActivity)?.showSnackbar(message)
                 ?: Log.e(TAG, "Cannot show snackbar: activity does not extend BaseActivity")
     }
 
     fun getSnackbar(message: String): Snackbar? {
-        val activity = activity
-        return if (activity is BaseActivity) {
-            activity.getSnackbar(message)
-        } else {
-            Log.e(TAG, "Cannot show snackbar: activity does not extend BaseActivity")
-            null
-        }
+        return (activity as? BaseActivity)?.getSnackbar(message) ?: null
     }
 }
