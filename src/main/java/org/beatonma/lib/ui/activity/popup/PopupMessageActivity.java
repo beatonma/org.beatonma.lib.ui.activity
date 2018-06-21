@@ -25,12 +25,12 @@ public class PopupMessageActivity extends PopupActivity {
     private Message mMessage;
 
     @Override
-    protected int getLayoutId() {
+    protected int getContentLayoutID() {
         return R.layout.activity_popup_message;
     }
 
     @Override
-    protected void initLayout(final ViewDataBinding binding) {
+    protected void initContentLayout(final ViewDataBinding binding) {
         mBinding = (ActivityPopupMessageBinding) binding;
 
         mBinding.setMessage(mMessage);

@@ -10,6 +10,7 @@ import android.view.View;
 import org.beatonma.lib.core.util.Sdk;
 import org.beatonma.lib.log.Log;
 import org.beatonma.lib.ui.activity.popup.BasePopupActivity;
+import org.beatonma.lib.ui.activity.popup.BasePopupActivityKt;
 import org.beatonma.lib.ui.activity.transition.BaseTransform;
 
 import java.io.Serializable;
@@ -334,7 +335,7 @@ public class ActivityBuilderDepr {
             if (activity instanceof BaseActivity) {
                 addSharedViews(((BaseActivity) activity).getSharedViews());
                 if (activity instanceof BasePopupActivity) {
-                    mIntent.putExtra(BasePopupActivity.Companion.getEXTRA_CALLED_FROM_POPUP(), true);
+                    mIntent.putExtra(BasePopupActivityKt.EXTRA_CALLED_FROM_POPUP, true);
                 }
             }
         }

@@ -14,6 +14,7 @@ import org.beatonma.lib.core.kotlin.extensions.autotag
 import org.beatonma.lib.core.kotlin.extensions.stringCompat
 import org.beatonma.lib.core.util.Sdk
 import org.beatonma.lib.ui.activity.popup.BasePopupActivity
+import org.beatonma.lib.ui.activity.popup.EXTRA_CALLED_FROM_POPUP
 import org.beatonma.lib.ui.activity.transition.BaseTransform
 import java.io.Serializable
 import java.lang.ref.WeakReference
@@ -123,7 +124,7 @@ class ActivityBuilder(
         if (usePopupAnimation) {
             activity.sharedViews?.let { addSharedViews(*it) }
             if (activity is BasePopupActivity) {
-                intent.putExtra(BasePopupActivity.EXTRA_CALLED_FROM_POPUP, true)
+                intent.putExtra(EXTRA_CALLED_FROM_POPUP, true)
             }
         }
 
