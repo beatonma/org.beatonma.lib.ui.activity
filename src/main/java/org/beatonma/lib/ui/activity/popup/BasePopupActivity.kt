@@ -1,6 +1,5 @@
 package org.beatonma.lib.ui.activity.popup
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -25,30 +24,22 @@ import org.beatonma.lib.ui.activity.transition.SharedPopupTransform
 import org.beatonma.lib.ui.style.Animation
 import org.beatonma.lib.ui.style.Interpolate
 
+
+const val EXTRA_TITLE = "title"
+const val EXTRA_CALLED_FROM_POPUP = "extra_called_from_popup"
+
 abstract class BasePopupActivity : BaseActivity() {
-
-    companion object {
-        protected val TAG = "PopupActivity"
-
-        val EXTRA_TITLE = "title"
-
-        val EXTRA_CALLED_FROM_POPUP = "extra_called_from_popup"
-
-        fun getDefaultOptions(title: String): Bundle {
-            val options = Bundle()
-            options.putString(EXTRA_TITLE, title)
-            return options
-        }
-    }
+    override val sharedViews: Array<SharedView>?
+        get() = arrayOf(SharedView(card, resources.getString(R.string.transition_card)))
 
     private var title: String? = null
     private var calledFromPopup: Boolean = false
 
     // Card content layout
-    protected abstract val layoutId: Int
+    protected abstract val contentLayoutID: Int
 
     // Parent layout
-    abstract val popupLayoutId: Int
+    override val layoutID: Int = R.layout.activity_popup
     abstract val overlay: View
     abstract val card: ViewGroup
     abstract val titleView: TextView
@@ -57,28 +48,23 @@ abstract class BasePopupActivity : BaseActivity() {
     abstract val negativeButton: AppCompatButton
     abstract val customActionButton: AppCompatButton
 
-    protected abstract fun initLayout(binding: ViewDataBinding)
+    /**
+     * Set up the popup content
+     */
+    protected abstract fun initContentLayout(binding: ViewDataBinding)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        onPreCreate()
-
-        super.onCreate(savedInstanceState)
-
-        val cardContentContainer = cardContentContainer
-        val overlay = overlay
-
+    override fun initLayout(binding: ViewDataBinding) {
         val contentBinding = DataBindingUtil.inflate<ViewDataBinding>(
-                LayoutInflater.from(this), layoutId, null, false)
+                LayoutInflater.from(this), contentLayoutID, null, false)
         cardContentContainer.addView(contentBinding.root)
 
-        setupWindowTransitions()
-        initLayout(contentBinding)
-        updateState(savedInstanceState)
+        initContentLayout(contentBinding)
 
         setTitle(title)
 
         overlay.setBackgroundColor(
-                colorCompat(if (calledFromPopup) R.color.Transparent else R.color.DialogOverlay))
+                colorCompat(if (calledFromPopup) R.color.Transparent
+                else R.color.DialogOverlay))
 
         overlay.setOnClickListener { close() }
         if (BuildConfig.DEBUG) {
@@ -95,42 +81,31 @@ abstract class BasePopupActivity : BaseActivity() {
                 .start()
     }
 
-    /**
-     * Called at the beginning of onCreate(), before any layout, etc has been set up
-     */
-    @CallSuper
-    protected open fun onPreCreate() {
-
-    }
-
-    @CallSuper
-    override fun initIntent(intent: Intent?) {
-        super.initIntent(intent)
-
-        if (intent != null) {
-            calledFromPopup = intent.getBooleanExtra(EXTRA_CALLED_FROM_POPUP, false)
-            initExtras(intent.extras)
-        } else {
-            initExtras(null)
-        }
-    }
+//    @CallSuper
+//    override fun initIntent(intent: Intent?) {
+//        super.initIntent(intent)
+//
+//        if (intent != null) {
+//            calledFromPopup = intent.getBooleanExtra(EXTRA_CALLED_FROM_POPUP, false)
+//            initExtras(intent.extras)
+//        } else {
+//            initExtras(null)
+//        }
+//    }
 
     @CallSuper
     override fun initExtras(extras: Bundle?) {
         super.initExtras(extras)
 
-        if (extras == null) return
+        extras ?: return
+
+        calledFromPopup = extras.getBoolean(EXTRA_CALLED_FROM_POPUP, false)
 
         val t = extras.get(EXTRA_TITLE)
         when (t) {
             is String -> title = t
             is Int -> title = getString(t)
         }
-    }
-
-    @CallSuper
-    open fun updateState(savedState: Bundle?) {
-
     }
 
     /**
@@ -213,10 +188,5 @@ abstract class BasePopupActivity : BaseActivity() {
                     .inflateTransition(R.transition.card_changebounds)
             TransitionManager.beginDelayedTransition(card, changeBounds)
         }
-    }
-
-
-    override fun getSharedViews(): Array<SharedView>? {
-        return arrayOf(SharedView(card, resources.getString(R.string.transition_card)))
     }
 }

@@ -12,24 +12,19 @@ import org.beatonma.lib.ui.activity.databinding.ActivityPopupBottomBinding
 
 
 abstract class BottomPopupActivity: BasePopupActivity() {
-    var mBinding: ActivityPopupBottomBinding? = null
+    lateinit var binding: ActivityPopupBottomBinding
 
-    override val popupLayoutId: Int = R.layout.activity_popup_bottom
-    override val overlay: View = mBinding!!.overlay
-    override val card: ViewGroup = mBinding!!.card
-    override val titleView: TextView = mBinding!!.title
-    override val cardContentContainer: ViewGroup = mBinding!!.contentContainer
-    override val positiveButton: AppCompatButton = mBinding!!.buttonPositive
-    override val negativeButton: AppCompatButton = mBinding!!.buttonPositive
-    override val customActionButton: AppCompatButton = mBinding!!.buttonPositive
-
+    override val layoutID: Int = R.layout.activity_popup_bottom
+    override val overlay: View = binding.overlay
+    override val card: ViewGroup = binding.card
+    override val titleView: TextView = binding.title
+    override val cardContentContainer: ViewGroup = binding.contentContainer
+    override val positiveButton: AppCompatButton = binding.buttonPositive
+    override val negativeButton: AppCompatButton = binding.buttonNegative
+    override val customActionButton: AppCompatButton = binding.buttonCustomAction
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        mBinding = DataBindingUtil.setContentView(this, popupLayoutId)
+        binding = DataBindingUtil.setContentView(this, layoutID)
         super.onCreate(savedInstanceState)
     }
-
-//    override fun getBinding(): ActivityPopupBottomBinding? {
-//        return mBinding
-//    }
 }
