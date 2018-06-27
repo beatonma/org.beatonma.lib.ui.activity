@@ -3,6 +3,7 @@ package org.beatonma.lib.ui.activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.annotation.CallSuper
 import androidx.appcompat.app.AppCompatActivity
@@ -10,7 +11,6 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.google.android.material.snackbar.Snackbar
-import org.beatonma.lib.log.Log
 
 /**
  * Created by Michael on 05/08/2016.
@@ -62,14 +62,15 @@ abstract class BaseActivity : AppCompatActivity() {
         // Create ViewModels or whatever
         onPreLayout()
 
+        // Load/refresh data
+        loadState(savedInstanceState)
+
         // Read extras
         initIntent(intent)
         initLayout(DataBindingUtil.setContentView(this, layoutID))
 
         // Set up custom sharedview or other transitions
         setupWindowTransitions()
-
-        updateState(savedInstanceState)
     }
 
     /**
@@ -85,8 +86,12 @@ abstract class BaseActivity : AppCompatActivity() {
 
     }
 
+
+    /**
+     * Reload data. Warning: Views have not been bound yet!
+     */
     @CallSuper
-    open fun updateState(savedState: Bundle?) {
+    open fun loadState(savedState: Bundle?) {
 
     }
 
@@ -108,11 +113,17 @@ abstract class BaseActivity : AppCompatActivity() {
         initExtras(intent?.extras)
     }
 
+    /**
+     * Read any Intent extras
+     */
     @CallSuper
     protected open fun initExtras(extras: Bundle?) {
 
     }
 
+    /**
+     * Called after initLayout so Views are accessible
+     */
     protected open fun setupWindowTransitions() {
 
     }

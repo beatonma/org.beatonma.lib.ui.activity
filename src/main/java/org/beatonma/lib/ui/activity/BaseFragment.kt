@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.CallSuper
 import androidx.core.view.doOnPreDraw
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -37,6 +38,8 @@ abstract class BaseFragment : Fragment() {
         return binding.root
     }
 
+
+    @CallSuper
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         postponeEnterTransition()
@@ -54,6 +57,6 @@ abstract class BaseFragment : Fragment() {
     }
 
     fun getSnackbar(message: String): Snackbar? {
-        return (activity as? BaseActivity)?.getSnackbar(message) ?: null
+        return (activity as? BaseActivity)?.getSnackbar(message)
     }
 }

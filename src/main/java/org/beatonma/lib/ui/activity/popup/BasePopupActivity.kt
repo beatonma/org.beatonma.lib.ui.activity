@@ -53,6 +53,7 @@ abstract class BasePopupActivity : BaseActivity() {
      */
     protected abstract fun initContentLayout(binding: ViewDataBinding)
 
+    @CallSuper
     override fun initLayout(binding: ViewDataBinding) {
         val contentBinding = DataBindingUtil.inflate<ViewDataBinding>(
                 LayoutInflater.from(this), contentLayoutID, null, false)
