@@ -22,5 +22,4 @@ dependencies {
 
     api project(":core")
     api project(":modules:ui:style")
-    api project(":modules:log")
 }
