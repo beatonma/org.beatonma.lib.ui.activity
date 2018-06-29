@@ -10,12 +10,12 @@ import androidx.annotation.StringRes
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
 import androidx.fragment.app.Fragment
-import org.beatonma.lib.core.kotlin.extensions.autotag
-import org.beatonma.lib.core.kotlin.extensions.stringCompat
-import org.beatonma.lib.core.util.Sdk
 import org.beatonma.lib.ui.activity.popup.BasePopupActivity
 import org.beatonma.lib.ui.activity.popup.EXTRA_CALLED_FROM_POPUP
 import org.beatonma.lib.ui.activity.transition.BaseTransform
+import org.beatonma.lib.util.Sdk
+import org.beatonma.lib.util.kotlin.extensions.autotag
+import org.beatonma.lib.util.kotlin.extensions.stringCompat
 import java.io.Serializable
 import java.lang.ref.WeakReference
 

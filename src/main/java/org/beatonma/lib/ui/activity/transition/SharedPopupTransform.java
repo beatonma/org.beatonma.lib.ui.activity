@@ -9,10 +9,10 @@ import android.transition.TransitionValues;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.beatonma.lib.core.util.Sdk;
-import org.beatonma.lib.ui.activity.popup.BasePopupActivity;
 import org.beatonma.lib.ui.activity.R;
+import org.beatonma.lib.ui.activity.popup.BasePopupActivity;
 import org.beatonma.lib.ui.style.Interpolate;
+import org.beatonma.lib.util.Sdk;
 
 import java.util.ArrayList;
 import java.util.List;

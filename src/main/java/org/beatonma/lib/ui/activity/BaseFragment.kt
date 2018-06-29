@@ -19,14 +19,11 @@ private const val TAG = "BaseFragment"
 abstract class BaseFragment : Fragment() {
     protected abstract val layoutID: Int
 
-    val parentActivity: BaseActivity by lazy {
-        if (activity is BaseActivity) {
-            activity as BaseActivity
-        } else {
-            throw ClassCastException("Parent activity does not extend BaseActivity")
-        }
-    }
-    val sharedViewStub: View? by lazy { parentActivity.sharedViewStub }
+    val parentActivity: BaseActivity
+        get() = activity as? BaseActivity
+                ?: throw ClassCastException("Parent activity does not extend BaseActivity")
+    val sharedViewStub: View?
+        get() = parentActivity.sharedViewStub
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,

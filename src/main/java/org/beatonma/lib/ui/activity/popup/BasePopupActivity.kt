@@ -12,9 +12,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.transition.TransitionInflater
 import androidx.transition.TransitionManager
-import org.beatonma.lib.core.kotlin.extensions.colorCompat
-import org.beatonma.lib.core.kotlin.extensions.hideIfEmpty
-import org.beatonma.lib.core.util.Sdk
 import org.beatonma.lib.ui.activity.BaseActivity
 import org.beatonma.lib.ui.activity.BuildConfig
 import org.beatonma.lib.ui.activity.R
@@ -23,7 +20,9 @@ import org.beatonma.lib.ui.activity.transition.CircularTransform
 import org.beatonma.lib.ui.activity.transition.SharedPopupTransform
 import org.beatonma.lib.ui.style.Animation
 import org.beatonma.lib.ui.style.Interpolate
-
+import org.beatonma.lib.util.Sdk
+import org.beatonma.lib.util.kotlin.extensions.colorCompat
+import org.beatonma.lib.util.kotlin.extensions.hideIfEmpty
 
 const val EXTRA_TITLE = "title"
 const val EXTRA_CALLED_FROM_POPUP = "extra_called_from_popup"

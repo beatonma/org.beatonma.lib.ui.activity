@@ -5,17 +5,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.View;
 
-import org.beatonma.lib.core.util.Sdk;
-import org.beatonma.lib.log.Log;
 import org.beatonma.lib.ui.activity.popup.BasePopupActivity;
 import org.beatonma.lib.ui.activity.popup.BasePopupActivityKt;
 import org.beatonma.lib.ui.activity.transition.BaseTransform;
+import org.beatonma.lib.util.Sdk;
 
 import java.io.Serializable;
 import java.lang.ref.WeakReference;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -292,18 +291,17 @@ public class ActivityBuilderDepr {
                 addExtras.invoke(null, mIntent, mAnimationSource);
                 return;
             }
-            catch (NoSuchMethodException e) {
-                Log.d(TAG, "addTransitionExtras(): Method not found: %s", e.toString());
-            }
-            catch (InvocationTargetException e) {
-                Log.d(TAG, "addTransitionExtras(): Invocation error: %s %s",
-                        e.getCause().toString(), e.getTargetException().toString());
-            }
-            catch (IllegalAccessException e) {
-                Log.d(TAG, "addTransitionExtras(): Illegal access error: %s", e.toString());
-            }
+//            catch (NoSuchMethodException e) {
+//                Log.d(TAG, "addTransitionExtras(): Method not found: %s", e.toString());
+//            }
+//            catch (InvocationTargetException e) {
+//                Log.d(TAG, "addTransitionExtras(): Invocation error: %s %s");
+//            }
+//            catch (IllegalAccessException e) {
+//                Log.d(TAG, "addTransitionExtras(): Illegal access error: %s", e.toString());
+//            }
             catch (Exception e) {
-                Log.d(TAG, "addTransitionExtras(): %s", e.toString());
+                Log.d(TAG, "addTransitionExtras(): " + e.toString());
             }
         }
         BaseTransform.addExtras(mIntent, mAnimationSource);

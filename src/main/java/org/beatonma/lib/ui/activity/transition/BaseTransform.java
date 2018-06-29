@@ -13,7 +13,7 @@ import android.transition.TransitionValues;
 import android.util.DisplayMetrics;
 import android.view.View;
 
-import org.beatonma.lib.core.util.Sdk;
+import org.beatonma.lib.util.Sdk;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
