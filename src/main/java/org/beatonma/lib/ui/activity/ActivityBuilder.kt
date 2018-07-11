@@ -18,6 +18,7 @@ import org.beatonma.lib.util.kotlin.extensions.autotag
 import org.beatonma.lib.util.kotlin.extensions.stringCompat
 import java.io.Serializable
 import java.lang.ref.WeakReference
+import kotlin.reflect.KClass
 
 /**
  * Created by Michael on 09/09/2016. Rewritten for Kotlin 14/06/2018.
@@ -44,6 +45,8 @@ class ActivityBuilder(
     var usePopupAnimation: Boolean = true
 
     var transform: Class<out BaseTransform>? = null
+
+    constructor(context: Any, cls: KClass<*>): this(context, cls.java)
 
     init {
         // Get a concrete Context object from the given source object (Context, Fragment, View)
