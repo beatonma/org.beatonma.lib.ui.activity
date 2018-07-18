@@ -111,6 +111,17 @@ class ActivityBuilder(
         extras.putAll(intent.extras)
     }
 
+    /**
+     * Convenience for builder.apply {
+     *     ...
+     *     start()
+     * }
+     */
+    inline fun startWith(block: ActivityBuilder.() -> Unit) {
+        this.block()
+        start()
+    }
+
     fun start() {
         intent.putExtras(extras)
         val context = weakContext.get()
