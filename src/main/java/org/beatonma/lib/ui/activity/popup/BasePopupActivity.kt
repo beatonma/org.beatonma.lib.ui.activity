@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.CallSuper
 import androidx.appcompat.widget.AppCompatButton
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.transition.TransitionInflater
@@ -46,6 +47,7 @@ abstract class BasePopupActivity : BaseActivity() {
     abstract val positiveButton: AppCompatButton
     abstract val negativeButton: AppCompatButton
     abstract val customActionButton: AppCompatButton
+    abstract val buttonSpacer: View
 
     /**
      * Set up the popup content
@@ -151,6 +153,7 @@ abstract class BasePopupActivity : BaseActivity() {
             setOnClickListener(listener)
             visibility = if (listener == null) View.GONE else View.VISIBLE
         }
+        updateButtonSpacerVisibility()
     }
 
     fun onNegativeClick(buttonText: Any? = null, listener: View.OnClickListener? = null) {
@@ -164,6 +167,7 @@ abstract class BasePopupActivity : BaseActivity() {
             setOnClickListener(listener)
             visibility = if (listener == null) View.GONE else View.VISIBLE
         }
+        updateButtonSpacerVisibility()
     }
 
     fun onCustomActionClick(buttonText: Any? = null, listener: View.OnClickListener? = null) {
@@ -177,6 +181,13 @@ abstract class BasePopupActivity : BaseActivity() {
             setOnClickListener(listener)
             visibility = if (listener == null) View.GONE else View.VISIBLE
         }
+        updateButtonSpacerVisibility()
+    }
+
+    private fun updateButtonSpacerVisibility() {
+        buttonSpacer.visibility = if (positiveButton.isVisible
+                || negativeButton.isVisible
+                || customActionButton.isVisible) { View.VISIBLE } else View.GONE
     }
 
     /**

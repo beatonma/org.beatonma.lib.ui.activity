@@ -39,6 +39,9 @@ abstract class PopupActivity : BasePopupActivity() {
     override val customActionButton: AppCompatButton
         get() = parentBinding.buttonCustomAction
 
+    override val buttonSpacer: View
+        get() = parentBinding.buttonSpacer
+
     override fun initLayout(binding: ViewDataBinding) {
         parentBinding = binding as ActivityPopupBinding
         super.initLayout(binding)
