@@ -28,7 +28,7 @@ import kotlin.reflect.KClass
  */
 @SuppressWarnings("unused")
 class ActivityBuilder(
-        context: Any,   // Context instance, or an attached fragment
+        context: Any,   // Any Context instance, an attached Fragment, or an attached View
         cls: Class<*>,
         var requestCode: Int? = null,
         fragment: Fragment? = null,
@@ -208,4 +208,25 @@ private fun Activity.startActivity(
         if (Sdk.isLollipop) startActivity(intent, optionsCompatBundle)
         else startActivity(intent)
     }
+}
+
+/**
+ * Convenience for ActivityBuilder(Context, KClass).startWith{ ... }
+ */
+fun Context.startActivity(cls: KClass<*>, block: ActivityBuilder.() -> Unit) {
+    ActivityBuilder(this, cls).startWith(block)
+}
+
+/**
+ * Convenience for ActivityBuilder(Context, KClass).startWith{ ... }
+ */
+fun Fragment.startActivity(cls: KClass<*>, block: ActivityBuilder.() -> Unit) {
+    ActivityBuilder(this, cls).startWith(block)
+}
+
+/**
+ * Convenience for ActivityBuilder(Context, KClass).startWith{ ... }
+ */
+fun View.startActivity(cls: KClass<*>, block: ActivityBuilder.() -> Unit) {
+    ActivityBuilder(this, cls).startWith(block)
 }
