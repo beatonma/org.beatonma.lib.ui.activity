@@ -117,7 +117,7 @@ class ActivityBuilder(
      *     start()
      * }
      */
-    inline fun startWith(block: ActivityBuilder.() -> Unit) {
+    inline fun startWith(block: (ActivityBuilder.() -> Unit)) {
         this.block()
         start()
     }
@@ -213,20 +213,20 @@ private fun Activity.startActivity(
 /**
  * Convenience for ActivityBuilder(Context, KClass).startWith{ ... }
  */
-fun Context.startActivity(cls: KClass<*>, block: ActivityBuilder.() -> Unit) {
+inline fun Context.startActivity(cls: KClass<*>, block: ActivityBuilder.() -> Unit = {}) {
     ActivityBuilder(this, cls).startWith(block)
 }
 
 /**
  * Convenience for ActivityBuilder(Context, KClass).startWith{ ... }
  */
-fun Fragment.startActivity(cls: KClass<*>, block: ActivityBuilder.() -> Unit) {
+inline fun Fragment.startActivity(cls: KClass<*>, block: ActivityBuilder.() -> Unit = {}) {
     ActivityBuilder(this, cls).startWith(block)
 }
 
 /**
  * Convenience for ActivityBuilder(Context, KClass).startWith{ ... }
  */
-fun View.startActivity(cls: KClass<*>, block: ActivityBuilder.() -> Unit) {
+inline fun View.startActivity(cls: KClass<*>, block: ActivityBuilder.() -> Unit = {}) {
     ActivityBuilder(this, cls).startWith(block)
 }
