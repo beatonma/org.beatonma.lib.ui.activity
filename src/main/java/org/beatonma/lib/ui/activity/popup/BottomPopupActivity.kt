@@ -27,4 +27,9 @@ abstract class BottomPopupActivity: BasePopupActivity() {
         binding = DataBindingUtil.setContentView(this, layoutID)
         super.onCreate(savedInstanceState)
     }
+
+    override val buttonSpacer: View
+        get() = binding.buttonBarrier
+
+
 }
