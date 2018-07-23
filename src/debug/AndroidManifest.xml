@@ -1,0 +1,15 @@
+<manifest
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  package="org.beatonma.lib.ui.activity">
+  <application>
+    <activity
+      android:name=".popup.SmallPopupTestActivity"
+      android:theme="@style/Beatonma.AppTheme.Floating"/>
+    <activity
+      android:name=".popup.MediumPopupTestActivity"
+      android:theme="@style/Beatonma.AppTheme.Floating"/>
+    <activity
+      android:name=".popup.LargePopupTestActivity"
+      android:theme="@style/Beatonma.AppTheme.Floating"/>
+  </application>
+</manifest>
