@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="popup_vertical_margin_default">24dp</dimen>
+    <dimen name="popup_margin_top">@dimen/popup_vertical_margin_default</dimen>
+    <dimen name="popup_margin_bottom">@dimen/popup_vertical_margin_default</dimen>
+
+    <dimen name="popup_content_max_height">120dp</dimen>
+</resources>

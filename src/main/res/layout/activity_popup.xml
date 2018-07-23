@@ -1,116 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools">
-
-  <androidx.coordinatorlayout.widget.CoordinatorLayout
-    android:id="@+id/top_level_container"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
-
-    <View
-      android:id="@+id/overlay"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"/>
-
-    <View
-      android:id="@+id/stub"
-      style="@style/SharedViewStub"/>
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".popup.PopupActivity">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:paddingTop="@dimen/statusbar_height"
-      android:fitsSystemWindows="true">
-
-      <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/card"
-        style="@style/Card.FullWidthOnSmall"
-        android:layout_gravity="center"
-        android:elevation="48dp"
-        android:fitsSystemWindows="true"
-        android:transitionName="@string/transition_card">
-
-        <TextView
-          android:id="@+id/title"
-          style="@style/Text.Primary.Header.Card"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toTopOf="parent"
-          tools:text="Card Title"/>
-
-        <androidx.core.widget.NestedScrollView
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:fitsSystemWindows="true"
-          android:id="@+id/content_scroll_wrapper"
-          app:layout_constrainedHeight="true"
-          app:layout_constraintBottom_toTopOf="@+id/button_spacer"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@+id/title">
-          <FrameLayout
-            android:id="@+id/content_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:alpha="0"
-            android:fitsSystemWindows="true"
-            android:gravity="center"
-            app:layout_constrainedHeight="true"
-            app:layout_constraintBottom_toTopOf="@+id/button_barrier"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title"/>
-        </androidx.core.widget.NestedScrollView>
+        android:id="@+id/top_level_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <View
-          android:layout_width="0dp"
-          android:layout_height="@dimen/dialog_bottom_controls_margin_top"
-          android:id="@+id/button_spacer"
-          android:visibility="gone"
-          app:layout_constraintBottom_toTopOf="@+id/button_barrier"/>
+            android:id="@+id/overlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
-        <androidx.constraintlayout.widget.Barrier
-          android:id="@+id/button_barrier"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          app:barrierDirection="top"
-          app:constraint_referenced_ids="button_positive,button_negative,button_custom_action"/>
+        <View
+            android:id="@+id/stub"
+            style="@style/SharedViewStub"/>
 
-        <androidx.appcompat.widget.AppCompatButton
-          android:layout_height="wrap_content"
-          android:id="@+id/button_custom_action"
-          style="@style/Button.Flat.Dialog"
-          android:text="_"
-          android:textColor="@color/TextSecondary"
-          android:visibility="gone"
-          app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintStart_toStartOf="parent"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/card"
+            style="@style/Card.FullWidthOnSmall"
+            android:layout_marginTop="@dimen/popup_margin_top"
+            android:layout_marginBottom="@dimen/popup_margin_bottom"
+            android:layout_gravity="center"
+            android:elevation="48dp"
+            android:transitionName="@string/transition_card">
 
-        <androidx.appcompat.widget.AppCompatButton
-          android:layout_height="wrap_content"
-          android:id="@+id/button_negative"
-          style="@style/Button.Flat.Dialog"
-          android:text="@string/dialog_cancel"
-          android:visibility="gone"
-          app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintEnd_toStartOf="@+id/button_positive"
-          app:layout_constraintHorizontal_bias="1.0"
-          app:layout_constraintStart_toEndOf="@+id/button_custom_action"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/title"
+                style="@style/Text.Primary.Header.Card"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Card Title"/>
 
-        <androidx.appcompat.widget.AppCompatButton
-          android:layout_height="wrap_content"
-          android:id="@+id/button_positive"
-          style="@style/Button.Flat.Dialog"
-          android:text="@string/dialog_ok"
-          android:visibility="gone"
-          app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintHorizontal_bias="1.0"/>
-      </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/content_scroll_wrapper"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintHeight_max="@dimen/popup_content_max_height"
+                app:layout_constrainedHeight="true"
+                app:layout_constraintBottom_toTopOf="@+id/button_spacer"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/title">
+
+                <FrameLayout
+                    android:id="@+id/content_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:alpha="0"
+                    android:gravity="center"/>
+            </androidx.core.widget.NestedScrollView>
+
+            <View
+                android:id="@+id/button_spacer"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/card_bottom_controls_margin_top"
+                android:visibility="visible"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/button_barrier"/>
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/button_barrier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:barrierDirection="top"
+                app:constraint_referenced_ids="button_positive,button_negative,button_custom_action"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_custom_action"
+                style="@style/Button.Flat.Dialog"
+                android:layout_height="wrap_content"
+                android:text="_"
+                android:textColor="@color/TextSecondary"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_negative"
+                style="@style/Button.Flat.Dialog"
+                android:layout_height="wrap_content"
+                android:text="@string/dialog_cancel"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/button_positive"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/button_custom_action"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_positive"
+                style="@style/Button.Flat.Dialog"
+                android:layout_height="wrap_content"
+                android:text="@string/dialog_ok"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-  </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
