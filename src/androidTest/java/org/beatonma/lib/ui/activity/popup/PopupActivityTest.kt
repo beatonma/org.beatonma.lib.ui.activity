@@ -34,10 +34,10 @@ class PopupActivityTestSuite
 @MediumTest
 abstract class PopupActivityTest {
     @get:Rule
-    abstract val activityRule: ActivityTestRule<out BaseTestPopup>
+    abstract val rule: ActivityTestRule<out BaseTestPopup>
 
     val activity: BaseTestPopup?
-        get() = activityRule.activity
+        get() = rule.activity
 
     @Test
     fun popup_withButtons_cardShouldBeCompletelyVisible() {
@@ -125,7 +125,7 @@ abstract class PopupActivityTest {
 
 @MediumTest
 class SmallPopupActivityTest : PopupActivityTest() {
-    override val activityRule = SmallPopupTestActivity::class.testRule
+    override val rule = SmallPopupTestActivity::class.testRule
 
     @Test
     fun popup_withSmallContent_shouldNotScroll() {
@@ -138,7 +138,7 @@ class SmallPopupActivityTest : PopupActivityTest() {
 
 @MediumTest
 class MediumPopupActivityTest : PopupActivityTest() {
-    override val activityRule = MediumPopupTestActivity::class.testRule
+    override val rule = MediumPopupTestActivity::class.testRule
 
     @Test
     fun popup_withMediumContent_shouldNotScroll() {
@@ -151,7 +151,7 @@ class MediumPopupActivityTest : PopupActivityTest() {
 
 @MediumTest
 class LargePopupActivityTest : PopupActivityTest() {
-    override val activityRule = LargePopupTestActivity::class.testRule
+    override val rule = LargePopupTestActivity::class.testRule
 
     @Test
     fun popup_withLargeContent_shouldScroll() {
