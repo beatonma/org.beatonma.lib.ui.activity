@@ -10,15 +10,15 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.filters.MediumTest
 import androidx.test.rule.ActivityTestRule
 import org.beatonma.lib.testing.espresso.ViewSizeMatchesParentMatcher
+import org.beatonma.lib.testing.espresso.click
+import org.beatonma.lib.testing.kotlin.extensions.assertions.assertTrue
+import org.beatonma.lib.testing.kotlin.extensions.testRule
 import org.beatonma.lib.ui.activity.R
 import org.hamcrest.Matchers.not
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Suite
-import kotlin.reflect.KClass
-
 
 @RunWith(Suite::class)
 @Suite.SuiteClasses(
@@ -28,57 +28,83 @@ import kotlin.reflect.KClass
 )
 class PopupActivityTestSuite
 
-
-class PopupTestRule<T: BasePopupActivity>(private val cls: KClass<T>): ActivityTestRule<T>(cls.java, true, true) {
-//    override fun getActivityIntent(): Intent {
-//        return Intent(InstrumentationRegistry.getInstrumentation().targetContext, cls.java)
-//    }
-}
-
 /**
  * Base class with tests that must pass for any PopupActivity, regardless of content
  */
 @MediumTest
 abstract class PopupActivityTest {
-    @Rule
-    abstract fun rule(): ActivityTestRule<out BasePopupActivity>
+    @get:Rule
+    abstract val activityRule: ActivityTestRule<out BaseTestPopup>
 
-    val activity: BasePopupActivity?
-        get() = rule().activity
-
-    @Before
-    fun setUp() {
-
-    }
+    val activity: BaseTestPopup?
+        get() = activityRule.activity
 
     @Test
-    fun popup_card_shouldBeCompletelyVisible() {
+    fun popup_withButtons_cardShouldBeCompletelyVisible() {
+        activity?.showButtons()
+
         onView(withId(R.id.card))
                 .check(matches(isCompletelyDisplayed()))
     }
 
     @Test
-    fun popup_positiveButton_shouldBeCompletelyVisible() {
+    fun popup_withTitle_cardShouldBeCompletelyVisible() {
+        activity?.showTitle()
+
+        onView(withId(R.id.card))
+                .check(matches(isCompletelyDisplayed()))
+    }
+
+    @Test
+    fun popup_withButtonsAndTitle_cardShouldBeCompletelyVisible() {
+        activity?.apply {
+            showButtons()
+            showTitle()
+        }
+
+        onView(withId(R.id.card))
+                .check(matches(isCompletelyDisplayed()))
+    }
+
+    @Test
+    fun popup_withPositiveButtonEnabled_positiveButtonShouldBeCompletelyVisible() {
+        activity?.showPositiveButton()
         onView(withId(R.id.button_positive))
                 .check(matches(isCompletelyDisplayed()))
     }
 
     @Test
-    fun popup_negativeButton_shouldBeCompletelyVisible() {
+    fun popup_withNegativeButtonEnabled_negativeButtonShouldBeCompletelyVisible() {
+        activity?.showNegativeButton()
         onView(withId(R.id.button_negative))
                 .check(matches(isCompletelyDisplayed()))
     }
 
     @Test
-    fun popup_customActionButton_shouldBeCompletelyVisible() {
+    fun popup_withCustomActionButton_customButtonShouldBeCompletelyVisible() {
+        activity?.showCustomActionButton()
         onView(withId(R.id.button_custom_action))
                 .check(matches(isCompletelyDisplayed()))
     }
 
     @Test
-    fun popup_title_shouldBeCompletelyVisible() {
+    fun popup_withTitle_titleShouldBeCompletelyVisible() {
+        activity?.showTitle()
         onView(withId(R.id.title))
                 .check(matches(isCompletelyDisplayed()))
+    }
+
+    @Test
+    fun popup_withButtonsVisible_buttonSpacerShouldBeVisible() {
+        activity?.showButtons()
+        onView(withId(R.id.button_spacer))
+                .check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun popup_withButtonsGone_buttonSpacerShouldBeGone() {
+        onView(withId(R.id.button_spacer))
+                .check(matches(not(isDisplayed())))
     }
 
     @Test
@@ -89,22 +115,17 @@ abstract class PopupActivityTest {
 
     @Test
     fun popup_clickOnBackground_shouldClosePopup() {
-        TODO("Activity is always null but I'm not sure why - may need to use UI automator instead?")
-//        Log.w(autotag, "IS NULL: ${rule().activity == null}")
+        // Tap just above the card - the background overlay should be accessible there
+        onView(withId(R.id.card))
+                .perform(click(y = -.1F))
 
-//        Log.d(autotag, "result: ${rule().activityResult}")
-//        activity.assertNotNull()
-//        onView(withId(R.id.overlay))
-//                .perform(click())
-//
-//        activity?.isFinishing?.assertTrue() ?: activity.assertNull()
+        activity?.isFinishing.assertTrue() // Also fine if activity is null
     }
 }
 
 @MediumTest
-class SmallPopupActivityTest: PopupActivityTest() {
-    @Rule
-    override fun rule() = PopupTestRule(SmallPopupTestActivity::class)
+class SmallPopupActivityTest : PopupActivityTest() {
+    override val activityRule = SmallPopupTestActivity::class.testRule
 
     @Test
     fun popup_withSmallContent_shouldNotScroll() {
@@ -116,9 +137,8 @@ class SmallPopupActivityTest: PopupActivityTest() {
 }
 
 @MediumTest
-class MediumPopupActivityTest: PopupActivityTest() {
-    @Rule
-    override fun rule() = ActivityTestRule(MediumPopupTestActivity::class.java, true, true)
+class MediumPopupActivityTest : PopupActivityTest() {
+    override val activityRule = MediumPopupTestActivity::class.testRule
 
     @Test
     fun popup_withMediumContent_shouldNotScroll() {
@@ -130,9 +150,8 @@ class MediumPopupActivityTest: PopupActivityTest() {
 }
 
 @MediumTest
-class LargePopupActivityTest: PopupActivityTest() {
-    @Rule
-    override fun rule() = ActivityTestRule(LargePopupTestActivity::class.java, true, true)
+class LargePopupActivityTest : PopupActivityTest() {
+    override val activityRule = LargePopupTestActivity::class.testRule
 
     @Test
     fun popup_withLargeContent_shouldScroll() {
