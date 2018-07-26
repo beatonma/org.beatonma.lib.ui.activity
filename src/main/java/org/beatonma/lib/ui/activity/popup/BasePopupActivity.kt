@@ -142,52 +142,52 @@ abstract class BasePopupActivity : BaseActivity() {
         setTitle(getString(resId))
     }
 
-    fun onPositiveClick(buttonText: Any? = null, listener: View.OnClickListener? = null) {
+    fun onPositiveClick(buttonText: Any? = null, listener: View.OnClickListener? = null, animate: Boolean = true) {
         positiveButton.apply {
-            TransitionManager.beginDelayedTransition(parent as ViewGroup)
+            if (animate) TransitionManager.beginDelayedTransition(parent as ViewGroup)
             text = when(buttonText) {
                 is Int -> getString(buttonText)
                 is String -> buttonText
                 else -> null
             }
             setOnClickListener(listener)
-            visibility = if (listener == null) View.GONE else View.VISIBLE
+            isVisible = listener != null
         }
         updateButtonSpacerVisibility()
     }
 
-    fun onNegativeClick(buttonText: Any? = null, listener: View.OnClickListener? = null) {
+    fun onNegativeClick(buttonText: Any? = null, listener: View.OnClickListener? = null, animate: Boolean = true) {
         negativeButton.apply {
-            TransitionManager.beginDelayedTransition(parent as ViewGroup)
+            if (animate) TransitionManager.beginDelayedTransition(parent as ViewGroup)
             text = when(buttonText) {
                 is Int -> getString(buttonText)
                 is String -> buttonText
                 else -> null
             }
             setOnClickListener(listener)
-            visibility = if (listener == null) View.GONE else View.VISIBLE
+            isVisible = listener != null
         }
         updateButtonSpacerVisibility()
     }
 
-    fun onCustomActionClick(buttonText: Any? = null, listener: View.OnClickListener? = null) {
+    fun onCustomActionClick(buttonText: Any? = null, listener: View.OnClickListener? = null, animate: Boolean = true) {
         customActionButton.apply {
-            TransitionManager.beginDelayedTransition(parent as ViewGroup)
+            if (animate) TransitionManager.beginDelayedTransition(parent as ViewGroup)
             text = when(buttonText) {
                 is Int -> getString(buttonText)
                 is String -> buttonText
                 else -> null
             }
             setOnClickListener(listener)
-            visibility = if (listener == null) View.GONE else View.VISIBLE
+            isVisible = listener != null
         }
         updateButtonSpacerVisibility()
     }
 
     private fun updateButtonSpacerVisibility() {
-        buttonSpacer.visibility = if (positiveButton.isVisible
+        buttonSpacer.isVisible = positiveButton.isVisible
                 || negativeButton.isVisible
-                || customActionButton.isVisible) { View.VISIBLE } else View.GONE
+                || customActionButton.isVisible
     }
 
     /**
