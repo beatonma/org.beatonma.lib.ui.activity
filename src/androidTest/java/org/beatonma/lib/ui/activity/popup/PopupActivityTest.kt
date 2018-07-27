@@ -103,6 +103,7 @@ abstract class PopupActivityTest {
 
     @Test
     fun popup_withButtonsGone_buttonSpacerShouldBeGone() {
+        activity?.hideButtons()
         onView(withId(R.id.button_spacer))
                 .check(matches(not(isDisplayed())))
     }
