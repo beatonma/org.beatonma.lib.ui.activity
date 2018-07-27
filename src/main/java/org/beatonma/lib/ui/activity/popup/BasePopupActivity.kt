@@ -32,8 +32,10 @@ abstract class BasePopupActivity : BaseActivity() {
     override val sharedViews: Array<SharedView>?
         get() = arrayOf(SharedView(card, resources.getString(R.string.transition_card)))
 
-    private var title: String? = null
-    private var calledFromPopup: Boolean = false
+    protected var cardTitle: String? = null
+        private set
+    protected var calledFromPopup: Boolean = false
+        private set
 
     // Card content layout
     protected abstract val contentLayoutID: Int
@@ -62,7 +64,7 @@ abstract class BasePopupActivity : BaseActivity() {
 
         initContentLayout(contentBinding)
 
-        setTitle(title)
+        setTitle(cardTitle)
 
         overlay.setBackgroundColor(
                 colorCompat(if (calledFromPopup) R.color.Transparent
@@ -105,8 +107,8 @@ abstract class BasePopupActivity : BaseActivity() {
 
         val t = extras.get(EXTRA_TITLE)
         when (t) {
-            is String -> title = t
-            is Int -> title = getString(t)
+            is String -> cardTitle = t
+            is Int -> cardTitle = getString(t)
         }
     }
 
@@ -133,7 +135,7 @@ abstract class BasePopupActivity : BaseActivity() {
     }
 
     fun setTitle(title: String?) {
-        this.title = title
+        this.cardTitle = title
         titleView.text = title
         titleView.hideIfEmpty()
     }
