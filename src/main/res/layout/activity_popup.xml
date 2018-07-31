@@ -26,7 +26,8 @@
             android:layout_marginBottom="@dimen/popup_margin_bottom"
             android:layout_gravity="center"
             android:elevation="48dp"
-            android:transitionName="@string/transition_card">
+            android:transitionName="@string/transition_card"
+            tools:layout_width="match_parent">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/title"
@@ -41,12 +42,13 @@
                 android:id="@+id/content_scroll_wrapper"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintHeight_max="@dimen/popup_content_max_height"
                 app:layout_constrainedHeight="true"
-                app:layout_constraintBottom_toTopOf="@+id/button_spacer"
+                app:layout_constraintHeight_min="@dimen/item_height_single"
+                app:layout_constraintHeight_max="@dimen/popup_content_max_height"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/title">
+                app:layout_constraintTop_toBottomOf="@+id/title"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
                 <FrameLayout
                     android:id="@+id/content_container"
@@ -60,10 +62,12 @@
                 android:id="@+id/button_spacer"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/card_bottom_controls_margin_top"
-                android:visibility="visible"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@+id/content_scroll_wrapper"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/button_barrier"/>
+                app:layout_constraintBottom_toTopOf="@+id/button_barrier"
+                tools:visibility="visible"/>
 
             <androidx.constraintlayout.widget.Barrier
                 android:id="@+id/button_barrier"
@@ -78,11 +82,12 @@
                 android:id="@+id/button_custom_action"
                 style="@style/Button.Flat.Dialog"
                 android:layout_height="wrap_content"
-                android:text="_"
                 android:textColor="@color/TextSecondary"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="~"
+                tools:visibility="visible"/>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_negative"
@@ -93,7 +98,9 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/button_positive"
                 app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toEndOf="@+id/button_custom_action"/>
+                app:layout_constraintStart_toEndOf="@+id/button_custom_action"
+                tools:text="-"
+                tools:visibility="visible"/>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_positive"
@@ -103,7 +110,9 @@
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"/>
+                app:layout_constraintHorizontal_bias="1.0"
+                tools:text="+"
+                tools:visibility="visible"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
