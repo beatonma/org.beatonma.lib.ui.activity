@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import android.view.View
 import androidx.annotation.StringRes
@@ -98,6 +99,7 @@ class ActivityBuilder(
             is Int -> extras.putInt(key, value)
             is Float -> extras.putFloat(key, value)
             is Long -> extras.putLong(key, value)
+            is Parcelable -> extras.putParcelable(key, value)
             is String -> extras.putString(key, value)
             is Serializable -> extras.putSerializable(key, value)
         }
