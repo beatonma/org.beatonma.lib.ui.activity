@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".popup.RecyclerViewPopupActivity">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/top_level_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <View
+            android:id="@+id/overlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <View
+            android:id="@+id/stub"
+            style="@style/SharedViewStub"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/card"
+            style="@style/Card.FullWidthOnSmall"
+            android:layout_marginTop="@dimen/popup_margin_top"
+            android:layout_marginBottom="@dimen/popup_margin_bottom"
+            android:layout_gravity="center"
+            android:elevation="48dp"
+            android:transitionName="@string/transition_card"
+            tools:layout_width="match_parent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/title"
+                style="@style/Text.Primary.Header.Card"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Card Title"/>
+
+            <org.beatonma.lib.ui.activity.popup.PopupRecyclerView
+                android:id="@+id/recyclerview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/title"
+                tools:itemCount="3"
+                tools:listitem="@layout/recycler_view_item"/>
+
+            <View
+                android:id="@+id/button_spacer"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/card_bottom_controls_margin_top"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerview"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/button_barrier"
+                tools:visibility="visible"/>
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/button_barrier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:barrierDirection="top"
+                app:constraint_referenced_ids="button_positive,button_negative,button_custom_action"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_custom_action"
+                style="@style/Button.Flat.Dialog"
+                android:layout_height="wrap_content"
+                android:textColor="@color/TextSecondary"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="~"
+                tools:visibility="visible"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_negative"
+                style="@style/Button.Flat.Dialog"
+                android:layout_height="wrap_content"
+                android:text="@string/dialog_cancel"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/button_positive"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/button_custom_action"
+                tools:text="-"
+                tools:visibility="visible"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_positive"
+                style="@style/Button.Flat.Dialog"
+                android:layout_height="wrap_content"
+                android:text="@string/dialog_ok"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                tools:text="+"
+                tools:visibility="visible"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>
