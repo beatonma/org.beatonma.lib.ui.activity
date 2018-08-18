@@ -33,7 +33,8 @@ class ActivityBuilder(
         cls: Class<*>,
         var requestCode: Int? = null,
         fragment: Fragment? = null,
-        var animationSource: View? = null
+        var animationSource: View? = null,
+        var flags: Int =  0
 ) {
     private val weakContext: WeakReference<Context>
     private val weakFragment: WeakReference<Fragment>?
@@ -126,6 +127,7 @@ class ActivityBuilder(
 
     fun start() {
         intent.putExtras(extras)
+        intent.addFlags(flags)
         val context = weakContext.get()
 
         if (context is BaseActivity) {
