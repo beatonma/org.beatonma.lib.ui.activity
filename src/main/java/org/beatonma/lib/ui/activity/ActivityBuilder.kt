@@ -28,7 +28,7 @@ import kotlin.reflect.KClass
  * This is intended for subclasses of BaseActivity, but should work for any Activity
  */
 @SuppressWarnings("unused")
-class ActivityBuilder(
+class ActivityBuilder @JvmOverloads constructor(
         context: Any,   // Any Context instance, an attached Fragment, or an attached View
         cls: Class<*>,
         var requestCode: Int? = null,
