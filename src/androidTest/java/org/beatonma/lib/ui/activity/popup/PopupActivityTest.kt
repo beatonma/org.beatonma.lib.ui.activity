@@ -4,13 +4,10 @@ package org.beatonma.lib.ui.activity.popup
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.filters.MediumTest
 import androidx.test.rule.ActivityTestRule
-import org.beatonma.lib.testing.espresso.ViewSizeMatchesParentMatcher
-import org.beatonma.lib.testing.espresso.click
+import org.beatonma.lib.testing.espresso.action.click
 import org.beatonma.lib.testing.kotlin.extensions.assertions.assertTrue
 import org.beatonma.lib.testing.kotlin.extensions.testRule
 import org.beatonma.lib.ui.activity.R
