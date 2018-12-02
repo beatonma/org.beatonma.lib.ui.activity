@@ -1,4 +1,6 @@
 dependencies {
+    debugImplementation project(":modules:testing")
+
     implementation "$module_dependencies.google.constraint"
     implementation "$module_dependencies.google.ktx.core"
     implementation "$module_dependencies.google.material"
