@@ -1,9 +1,9 @@
 dependencies {
     debugImplementation project(":modules:testing")
 
-    implementation "$module_dependencies.google.constraint"
-    implementation "$module_dependencies.google.ktx.core"
-    implementation "$module_dependencies.google.material"
+    implementation "androidx.constraintlayout:constraintlayout:$versions.constraint"
+    implementation "androidx.core:core-ktx:$versions.ktx_core"
+    implementation "com.google.android.material:material:$versions.androidx"
 
     api project(":core")
     api project(":modules:ui:style")
