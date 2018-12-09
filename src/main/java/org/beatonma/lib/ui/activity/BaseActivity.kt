@@ -95,17 +95,17 @@ abstract class BaseActivity : AppCompatActivity() {
 
     }
 
-    fun getSnackbar(message: String): Snackbar? {
+    fun getSnackbar(message: String, duration: Int = Snackbar.LENGTH_LONG): Snackbar? {
         val v = findViewById<View>(R.id.top_level_container)
         if (v != null) {
-            return Snackbar.make(v, message, Snackbar.LENGTH_LONG)
+            return Snackbar.make(v, message, duration)
         }
         Log.e(TAG, "Error building snackbar for message: $message")
         return null
     }
 
-    fun showSnackbar(message: String) {
-        getSnackbar(message)?.show()
+    fun showSnackbar(message: String, duration: Int = Snackbar.LENGTH_LONG) {
+        getSnackbar(message, duration)?.show()
     }
 
     @CallSuper
